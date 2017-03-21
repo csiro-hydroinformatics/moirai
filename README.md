@@ -18,8 +18,7 @@ This software is dual-licensed:
 * [Affero GPLv3](https://www.gnu.org/licenses/agpl-3.0.en.html) for non-commercial purposes.
 * Commercial license options can otherwise be arranged. The intent is to promote fair use and citations rather than expecting paid options, so please contact us (e-mail). 
 
-* Copyright 2017 CSIRO, 
-* Author Jean-Michel Perraud
+Copyright 2017 CSIRO - Author: Jean-Michel Perraud
 
 ## Naming
 
