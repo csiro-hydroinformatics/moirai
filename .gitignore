@@ -1,0 +1,16 @@
+*.tlog
+*.idb
+*.exp
+*csproj.FileListAbsolute.txt
+[Dd]ebug/
+[Rr]elease/
+
+# Visual C++ cache files
+ipch/
+*.aps
+*.ncb
+*.opensdf
+*.sdf
+
+*.opendb
+*.db

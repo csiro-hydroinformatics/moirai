@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is a template from which you can set up a property file that matches the settings of your machine.
+-->
+<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="UserMacros">
+    <Moirai_IncludePath>C:/local/include/catch</Moirai_IncludePath>
+  </PropertyGroup>
+    <Target Name="ValidatePaths">  
+    <Error Condition="!exists('$(Moirai_IncludePath)')" Text="Moirai_IncludePath='$(Moirai_IncludePath)' not found" />
+  </Target>
+  <ItemGroup>
+    <BuildMacro Include="Moirai_IncludePath">
+      <Value>$(Moirai_IncludePath)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+  </ItemGroup>  
+
+    <PropertyGroup Label="UserMacros">
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir>$(SolutionDir)/$(Platform)/$(Configuration)/</OutDir>
+    <LinkIncremental Condition="'$(Configuration)'=='Debug'">true</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)'=='Release'">false</LinkIncremental>
+    <UseDebugLibraries Condition="'$(Configuration)'=='Debug'">true</UseDebugLibraries>
+    <UseDebugLibraries Condition="'$(Configuration)'=='Release'">false</UseDebugLibraries>
+    <GenerateManifest>true</GenerateManifest>
+    <MachineArch Condition="'$(Platform)'=='Win32'">X86</MachineArch>
+    <MachineArch Condition="'$(Platform)'=='x64'">x64</MachineArch>
+    <MachineBits Condition="'$(Platform)'=='Win32'">32</MachineBits>
+    <MachineBits Condition="'$(Platform)'=='x64'">64</MachineBits>
+    <InlineFuncExpansionSetting Condition="'$(Configuration)'=='Debug'">Disabled</InlineFuncExpansionSetting>
+    <InlineFuncExpansionSetting Condition="'$(Configuration)'=='Release'">AnySuitable</InlineFuncExpansionSetting>
+    <OptimizationSetting Condition="'$(Configuration)'=='Debug'">Disabled</OptimizationSetting>
+    <OptimizationSetting Condition="'$(Configuration)'=='Release'">MaxSpeed</OptimizationSetting>	
+    <Optimization>$(OptimizationSetting)</Optimization>	
+    <WholeProgramOptimization Condition="'$(Configuration)'=='Debug'">false</WholeProgramOptimization>
+    <WholeProgramOptimization Condition="'$(Configuration)'=='Release'">true</WholeProgramOptimization>	
+	<!-- Potentially included here? -->
+    <!-- <PlatformToolset>v120</PlatformToolset> -->
+  </PropertyGroup>
+
+  <ItemDefinitionGroup>
+<ClCompile>
+  <AssemblerListingLocation>./$(Configuration)/$(Platform)</AssemblerListingLocation>
+  <BasicRuntimeChecks Condition="'$(Configuration)'=='Debug'">EnableFastChecks</BasicRuntimeChecks>
+  <CompileAs>CompileAsCpp</CompileAs>
+  <DebugInformationFormat Condition="'$(Configuration)'=='Debug'">ProgramDatabase</DebugInformationFormat>
+  <ExceptionHandling>Sync</ExceptionHandling>
+  <InlineFunctionExpansion>$(InlineFuncExpansionSetting)</InlineFunctionExpansion>
+  <Optimization>$(OptimizationSetting)</Optimization>
+  <PrecompiledHeader>NotUsing</PrecompiledHeader>
+  <RuntimeLibrary Condition="'$(Configuration)'=='Debug'">MultiThreadedDebugDLL</RuntimeLibrary>
+  <RuntimeLibrary Condition="'$(Configuration)'=='Release'">MultiThreadedDLL</RuntimeLibrary>
+  <RuntimeTypeInfo>true</RuntimeTypeInfo>
+  <WarningLevel>Level3</WarningLevel>
+  <FunctionLevelLinking Condition="'$(Configuration)'=='Debug'">false</FunctionLevelLinking>
+  <FunctionLevelLinking Condition="'$(Configuration)'=='Release'">true</FunctionLevelLinking>
+  <IntrinsicFunctions Condition="'$(Configuration)'=='Debug'">false</IntrinsicFunctions>
+  <IntrinsicFunctions Condition="'$(Configuration)'=='Release'">true</IntrinsicFunctions>
+  <PreprocessorDefinitions Condition="'$(Configuration)'=='Debug'">_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+  <PreprocessorDefinitions Condition="'$(Configuration)'=='Release'">NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+  <ObjectFileName>$(IntDir)</ObjectFileName>
+</ClCompile>
+<ResourceCompile>
+  <PreprocessorDefinitions Condition="'$(Configuration)'=='Debug'">_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+  <PreprocessorDefinitions Condition="'$(Configuration)'=='Release'">NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+</ResourceCompile>
+<Link>
+  <AdditionalOptions Condition="'$(Configuration)'=='Debug'"> /machine:$(MachineArch) /debug %(AdditionalOptions)</AdditionalOptions>
+  <AdditionalOptions Condition="'$(Configuration)'=='Release'"> /machine:$(MachineArch) %(AdditionalOptions)</AdditionalOptions>
+  <AdditionalDependencies>kernel32.lib</AdditionalDependencies>
+  <GenerateDebugInformation Condition="'$(Configuration)'=='Debug'">true</GenerateDebugInformation>
+  <GenerateDebugInformation Condition="'$(Configuration)'=='Release'">false</GenerateDebugInformation>
+  <OptimizeReferences Condition="'$(Configuration)'=='Debug'">false</OptimizeReferences>
+  <OptimizeReferences Condition="'$(Configuration)'=='Release'">true</OptimizeReferences>
+  <SubSystem>Console</SubSystem>
+</Link>
+</ItemDefinitionGroup>
+
+</Project>
