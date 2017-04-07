@@ -83,43 +83,25 @@ namespace moirai
 		*
 		* \param	p	pointer to the object.
 		*/
-		void release(void* p) { release((size_t)p); }
+		void release(void* p);
 	};
 
-	class typeinfo
+	class MOIRAI_API typeinfo
 	{
 		const std::type_info* p_;
 
 	public:
-		typeinfo()
-			: p_(nullptr)
-		{}
+		typeinfo();
 
-		typeinfo(const std::type_info& t)
-			: p_(&t)
-		{}
+		typeinfo(const std::type_info& t);
 
-		inline const char* name() const
-		{
-			return p_ ? p_->name() : "";
-		}
+		inline const char* name() const;
 
-		inline const size_t hash_code() const
-		{
-			return p_ ? p_->hash_code() : 0;
-		}
+		inline const size_t hash_code() const;
 
-		inline bool operator<(const typeinfo& that) const
-		{
-			return (p_ != that.p_) &&
-				(!p_ || (that.p_ && static_cast<bool>(p_->before(*that.p_))));
-		}
+		inline bool operator<(const typeinfo& that) const;
 
-		inline bool operator==(const typeinfo& that) const
-		{
-			return (p_ == that.p_) ||
-				(p_ && that.p_ && static_cast<bool>(*p_ == *that.p_));
-		}
+		inline bool operator==(const typeinfo& that) const;
 	};
 
 

@@ -15,12 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="species.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="c_interop_api.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="../../include/moirai/reference_handle.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -30,12 +24,18 @@
     <ClInclude Include="../../include/moirai/reference_handle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="./include/moirai_test_lib_b/c_interop_api.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="./include/moirai_test_lib_b/domain_b.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="species.cpp">
+    <ClCompile Include="c_interop_api.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="c_interop_api.cpp">
+    <ClCompile Include="domain_b.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

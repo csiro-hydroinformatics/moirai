@@ -15,27 +15,24 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="species.h">
+    <ClInclude Include="..\include\moirai\error_reporting.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="c_interop_api.h">
+    <ClInclude Include="..\include\moirai\reference_handle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="../../include/moirai/reference_handle.hpp">
+    <ClInclude Include="..\include\moirai\reference_handle.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="../../include/moirai/setup_modifiers.h">
+    <ClInclude Include="..\include\moirai\reference_handle_map_export.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="../../include/moirai/reference_handle.h">
+    <ClInclude Include="..\include\moirai\setup_modifiers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="species.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="c_interop_api.cpp">
+    <ClCompile Include="reference_handle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{AAE11187-877B-4AC5-90A8-9BB6B3DE08EB}</ProjectGuid>
+    <ProjectGuid>{B4E0D755-0844-4C4A-96F9-AD10391B653C}</ProjectGuid>
     <RootNamespace>moiraitest</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -49,12 +49,12 @@
     <ClInclude Include="../../include/moirai/reference_handle.hpp" />
     <ClInclude Include="../../include/moirai/setup_modifiers.h" />
     <ClInclude Include="../../include/moirai/reference_handle.h" />
-    <ClInclude Include="c_interop_api.h" />
-    <ClInclude Include="species.h" />
+    <ClInclude Include="./include/moirai_test_lib_b/c_interop_api.h" />
+    <ClInclude Include="./include/moirai_test_lib_b/domain_b.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="c_interop_api.cpp" />
-    <ClCompile Include="species.cpp" />
+    <ClCompile Include="domain_b.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)/Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

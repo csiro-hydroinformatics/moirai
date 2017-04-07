@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{AAE11187-877B-4AC5-90A8-9BB6B3DE08EB}</ProjectGuid>
+    <ProjectGuid>{4BE41F57-7A6F-452F-936E-E3875B5D63C7}</ProjectGuid>
     <RootNamespace>moiraitest</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -37,24 +37,18 @@
     <Import Project="$(USERPROFILE)\My Documents\moirai.props" Condition="exists('$(USERPROFILE)\My Documents\moirai.props')" />
   </ImportGroup>
   <PropertyGroup>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);../../include;$(Moirai_IncludePath)</IncludePath>
-    <LibraryPath>$(OutDir);$(LibraryPath)</LibraryPath>
+    <IncludePath>../include;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(Moirai_IncludePath)</IncludePath>
   </PropertyGroup>
-  <ItemDefinitionGroup>
-    <Link>
-      <AdditionalDependencies>kernel32.lib;moirai.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Link>
-  </ItemDefinitionGroup>
+  <PropertyGroup />
   <ItemGroup>
-    <ClInclude Include="../../include/moirai/reference_handle.hpp" />
-    <ClInclude Include="../../include/moirai/setup_modifiers.h" />
-    <ClInclude Include="../../include/moirai/reference_handle.h" />
-    <ClInclude Include="c_interop_api.h" />
-    <ClInclude Include="species.h" />
+    <ClCompile Include="reference_handle.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="c_interop_api.cpp" />
-    <ClCompile Include="species.cpp" />
+    <ClInclude Include="..\include\moirai\error_reporting.h" />
+    <ClInclude Include="..\include\moirai\reference_handle.h" />
+    <ClInclude Include="..\include\moirai\reference_handle.hpp" />
+    <ClInclude Include="..\include\moirai\reference_handle_map_export.h" />
+    <ClInclude Include="..\include\moirai\setup_modifiers.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)/Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

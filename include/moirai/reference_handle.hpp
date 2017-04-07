@@ -171,6 +171,11 @@ namespace moirai
 			reference_handle_map::instance().release(this->get_ptr());
 		}
 
+		reference_handle<T>* new_reference_handle()
+		{
+			return new reference_handle<T>(get_ptr());
+		}
+
 		/** \brief	T* casting operator. */
 		//explicit operator T*() 
 		//{ 

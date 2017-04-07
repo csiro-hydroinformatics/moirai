@@ -48,6 +48,8 @@ namespace moirai
 		}
 	}
 
+	void reference_handle_map::release(void* p) { release((size_t)p); }
+
 	opaque_ptr_provider::opaque_ptr_provider(const std::type_info& tinfo)
 	{
 		wrapped_type_info = typeinfo(tinfo);
@@ -58,5 +60,35 @@ namespace moirai
 	opaque_ptr_provider::~opaque_ptr_provider() {}
 
 	const char* opaque_ptr_provider::wrapped_type_name() { return wrapped_type_info.name(); }
+
+	typeinfo::typeinfo()
+		: p_(nullptr)
+	{}
+
+	typeinfo::typeinfo(const std::type_info& t)
+		: p_(&t)
+	{}
+
+	inline const char* typeinfo::name() const
+	{
+		return p_ ? p_->name() : "";
+	}
+
+	inline const size_t typeinfo::hash_code() const
+	{
+		return p_ ? p_->hash_code() : 0;
+	}
+
+	inline bool typeinfo::operator<(const typeinfo& that) const
+	{
+		return (p_ != that.p_) &&
+			(!p_ || (that.p_ && static_cast<bool>(p_->before(*that.p_))));
+	}
+
+	inline bool typeinfo::operator==(const typeinfo& that) const
+	{
+		return (p_ == that.p_) ||
+			(p_ && that.p_ && static_cast<bool>(*p_ == *that.p_));
+	}
 
 }
