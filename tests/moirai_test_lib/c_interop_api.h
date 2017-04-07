@@ -5,8 +5,6 @@
 #pragma once
 
 #include "./setup_modifiers.h"
-#define USING_MOIRAI
-#include "moirai/setup_modifiers.h"
 
 #if defined(USING_SPECIES_API)
 // this file is included by code that uses the C API

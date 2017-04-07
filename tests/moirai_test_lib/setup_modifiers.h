@@ -1,5 +1,8 @@
 #pragma once
 
+#define USING_MOIRAI
+#include "moirai/setup_modifiers.h"
+
 // Defining the SPECIES_API macro following guidelines in e.g. https://msdn.microsoft.com/en-us/library/8fskxacy.aspx
 
 // The declaration modifiers can be overriden by the user by defining SPECIES_LIB_MODIFIERS

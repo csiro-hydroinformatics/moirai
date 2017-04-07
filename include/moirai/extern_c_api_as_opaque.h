@@ -1,0 +1,4 @@
+#pragma once
+
+#define VOID_PTR_PROVIDER_PTR void*
+#define VOID_PTR_PROVIDER_PTR_PTR VOID_PTR_PROVIDER_PTR*

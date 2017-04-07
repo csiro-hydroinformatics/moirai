@@ -42,6 +42,7 @@
   <PropertyGroup />
   <ItemGroup>
     <ClCompile Include="reference_handle.cpp" />
+    <ClCompile Include="reference_handle_map_export.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\moirai\error_reporting.h" />

@@ -35,5 +35,8 @@
     <ClCompile Include="reference_handle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="reference_handle_map_export.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
