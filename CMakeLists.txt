@@ -18,6 +18,7 @@ LINK_DIRECTORIES(
 # Add your source files here (one file per line), please SORT in alphabetical order for future maintenance
 SET (${this_target}_SOURCE_FILES
 		src/reference_handle.cpp
+    src/reference_handle_map_export.cpp
 )
 
 ## section: header files
@@ -26,6 +27,9 @@ SET (${this_target}_SOURCE_FILES
 
 SET(${this_target}_HEADER_FILES
 include/moirai/error_reporting.h
+include/moirai/extern_c_api_as_opaque.h
+include/moirai/extern_c_api_as_transparent.h
+include/moirai/reference_handle_map_export.h
 include/moirai/reference_handle.h
 include/moirai/reference_handle.hpp
 include/moirai/setup_modifiers.h
