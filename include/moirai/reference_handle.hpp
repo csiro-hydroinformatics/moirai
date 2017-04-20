@@ -319,6 +319,6 @@ namespace moirai
 #define CHECKED_RETRIEVE_PTR(T, x)    (moirai::as_raw_pointer<T>(x))
 #define RETRIEVE_POINTERS_FROM_SHPTR(T, sharedPtrs, n) moirai::as_raw_pointers<T>(sharedPtrs, n)
 #else
-#define CHECKED_RETRIEVE_PTR(T, x)    (moirai::as_raw_pointer<T>((opaque_ptr_provider*)x))
+#define CHECKED_RETRIEVE_PTR(T, x)    (moirai::as_raw_pointer<T>((moirai::opaque_ptr_provider*)x))
 #endif
 
