@@ -24,4 +24,5 @@ namespace moirai
 		string homo_erectus::get_name() const { return string("homo_erectus"); }
 
 	}
+
 }

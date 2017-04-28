@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../include/moirai/reference_handle.hpp"
+#include "../../include/moirai/reference_type_converters.hpp"
 
 #define MOIRAI_TEST_CLASSES_ATTR __declspec(dllexport)
 
