@@ -28,3 +28,18 @@ void error_log::register_exception_callback(const void* callback, bool allow_ove
 	}
 }
 
+
+void dispose_reference_handle(REFERENCE_HANDLE_PTR ptr)
+{
+	// Can't throw an exception in an external C function...
+	//if (ptr == nullptr)
+	//	throw std::invalid_argument("Moirai dispose_reference_handle called with a nullptr as an argument");
+	if (ptr != nullptr)
+		delete ptr;
+}
+
+int get_reference_count(REFERENCE_HANDLE_PTR ptr)
+{
+	return ptr->count();
+}
+

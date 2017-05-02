@@ -41,7 +41,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <Link>
-      <AdditionalDependencies>kernel32.lib;moirai_test_lib.lib;moirai_test_lib_a.lib;moirai_test_lib_b.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;moirai_test_lib.lib;moirai_test_lib_a.lib;moirai_test_lib_b.lib;moirai.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <PropertyGroup />

@@ -1,5 +1,7 @@
 #include "c_interop_api.h"
 
+#include "moirai/reference_handle_map_export.h"
+
 #ifdef _WIN32
 #define STRDUP _strdup
 #else
@@ -56,4 +58,9 @@ int put_in_dog_kenel(DOG_PTR d)
 	if (d_ptr == nullptr)
 		return 1;
 	return 0;
+}
+
+void release_handle_species_via_moirai(VOID_PTR_PROVIDER_PTR ptr)
+{
+	dispose_reference_handle(ptr);
 }

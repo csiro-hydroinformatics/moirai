@@ -47,6 +47,8 @@ extern "C" {
 	// the disposal of the inner object if it has reached a count of 0 references. 
 	SPECIES_API void release_handle(VOID_PTR_PROVIDER_PTR ptr);
 
+	SPECIES_API void release_handle_species_via_moirai(VOID_PTR_PROVIDER_PTR ptr);
+
 	// Read the reference count of a handle. This function should not be necessary 
 	// in a production API but added here for didactic and testing purposes.
 	SPECIES_API int reference_count(VOID_PTR_PROVIDER_PTR ptr);

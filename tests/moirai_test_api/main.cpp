@@ -13,6 +13,8 @@
 #define USING_DOMAIN_B_API
 #include "../../tests/moirai_test_lib_b/include/moirai_test_lib_b/c_interop_api.h"
 
+#include "moirai/reference_handle_map_export.h"
+
 using std::vector;
 using std::string;
 
@@ -79,4 +81,73 @@ TEST_CASE("Multiple APIs with opaque pointers")
 
 }
 
+
+TEST_CASE("Multiple APIs with opaque pointers released via Moirai C API")
+{
+	//see whether we can centralize API calls for disposal of objects,
+	//	to limit duplications or errors in using's libraries
+	A_PTR a = create_a_obj();
+	REQUIRE(reference_count(a) == 1);
+	REQUIRE(get_reference_count(a) == 1);
+	A_PTR a2 = clone_handle_a(a);
+	REQUIRE(reference_count(a) == 2);
+	REQUIRE(get_reference_count(a) == 2);
+	release_handle_domain_a_via_moirai(a2);
+	REQUIRE(reference_count(a) == 1);
+	REQUIRE(get_reference_count(a) == 1);
+	release_handle_domain_a_via_moirai(a);
+
+
+	B_PTR b = create_b_obj();
+	REQUIRE(reference_count(b) == 1);
+	REQUIRE(get_reference_count(b) == 1);
+	B_PTR bb3 = clone_handle_b_in_domain_b(b);
+	REQUIRE(reference_count(b) == 2);
+	REQUIRE(get_reference_count(b) == 2);
+	release_handle_domain_b_via_moirai(bb3);
+	REQUIRE(reference_count(b) == 1);
+	REQUIRE(get_reference_count(b) == 1);
+	bb3 = new_handle_b_in_domain_b(b);
+	REQUIRE(reference_count(b) == 2);
+	REQUIRE(get_reference_count(b) == 2);
+	release_handle_domain_b_via_moirai(bb3);
+	REQUIRE(reference_count(b) == 1);
+	REQUIRE(get_reference_count(b) == 1);
+
+
+	B_PTR b2 = clone_handle_b_in_domain_a(b);
+	REQUIRE(reference_count(b) == 2);
+	REQUIRE(get_reference_count(b) == 2);
+	B_PTR b3 = new_handle_b_in_domain_a(b);
+	REQUIRE(reference_count(b) == 3);
+	REQUIRE(get_reference_count(b) == 3);
+	release_handle_domain_b_via_moirai(b3);
+	REQUIRE(reference_count(b) == 2);
+	REQUIRE(get_reference_count(b) == 2);
+	release_handle_domain_b_via_moirai(b2);
+	REQUIRE(reference_count(b) == 1);
+	REQUIRE(get_reference_count(b) == 1);
+	release_handle_domain_b_via_moirai(b);
+
+}
+
+#include "moirai/opaque_pointers.hpp"
+
+TEST_CASE("Opaque pointers handlers meant for C++ projects accessing the C API")
+{
+	using wrapper = moirai::opaque_pointer_handle;
+	CAT_PTR cat = create_cat();
+	wrapper* cat_h = new wrapper(cat);
+	REQUIRE(get_reference_count(cat) == 1);
+	MAMAL_PTR mamal = create_mamal_ptr(cat);
+	wrapper* mamal_h = new wrapper(mamal);
+	REQUIRE(get_reference_count(cat) == 2);
+	REQUIRE(get_reference_count(mamal) == 2);
+	REQUIRE(cat_h->get_reference_count() == 2);
+	REQUIRE(mamal_h->get_reference_count() == 2);
+	delete cat_h;
+	REQUIRE(get_reference_count(mamal) == 1);
+	REQUIRE(mamal_h->get_reference_count() == 1);
+	delete mamal_h;
+}
 

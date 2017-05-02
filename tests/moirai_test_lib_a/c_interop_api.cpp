@@ -1,5 +1,7 @@
 #include "./include/moirai_test_lib_a/c_interop_api.h"
 
+#include "moirai/reference_handle_map_export.h"
+
 #ifdef _WIN32
 #define STRDUP _strdup
 #else
@@ -46,6 +48,11 @@ void free_string(char* s)
 void release_handle(VOID_PTR_PROVIDER_PTR ptr)
 {
 	delete ptr;
+}
+
+void release_handle_domain_a_via_moirai(VOID_PTR_PROVIDER_PTR ptr)
+{
+	dispose_reference_handle(ptr);
 }
 
 int reference_count(VOID_PTR_PROVIDER_PTR ptr)
