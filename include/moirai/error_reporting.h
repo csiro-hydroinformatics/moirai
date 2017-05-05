@@ -17,7 +17,7 @@ namespace moirai {
 			static void handle_std_exception(const TException& e);
 			static void register_exception_callback(const void* callback, bool allow_override = false);
 			static string get_last_exception_message();
-
+			static bool has_callback_registered();
 		private:
 			static std::string last_exception_message;
 			static exception_callback callback;

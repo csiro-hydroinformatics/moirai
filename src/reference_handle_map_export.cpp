@@ -28,6 +28,10 @@ void error_log::register_exception_callback(const void* callback, bool allow_ove
 	}
 }
 
+bool error_log::has_callback_registered()
+{
+	return (callback != nullptr);
+}
 
 void dispose_reference_handle(REFERENCE_HANDLE_PTR ptr)
 {
@@ -43,3 +47,12 @@ int get_reference_count(REFERENCE_HANDLE_PTR ptr)
 	return ptr->count();
 }
 
+bool has_error_handling_callback_registered()
+{
+	return error_log::has_callback_registered();
+}
+
+void register_error_handling_callback(const void* callback)
+{
+	error_log::register_exception_callback(callback);
+}
