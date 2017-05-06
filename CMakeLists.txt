@@ -29,9 +29,11 @@ SET(${this_target}_HEADER_FILES
 include/moirai/error_reporting.h
 include/moirai/extern_c_api_as_opaque.h
 include/moirai/extern_c_api_as_transparent.h
-include/moirai/reference_handle_map_export.h
+include/moirai/opaque_pointers.hpp
 include/moirai/reference_handle.h
 include/moirai/reference_handle.hpp
+include/moirai/reference_handle_map_export.h
+include/moirai/reference_type_converters.hpp
 include/moirai/setup_modifiers.h
 )
 
