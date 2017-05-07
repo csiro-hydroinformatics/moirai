@@ -95,13 +95,13 @@ namespace moirai
 
 		typeinfo(const std::type_info& t);
 
-		inline const char* name() const;
+		/*inline*/ const char* name() const;
 
-		inline const size_t hash_code() const;
+		/*inline*/ const size_t hash_code() const;
 
-		inline bool operator<(const typeinfo& that) const;
+		/*inline*/ bool operator<(const typeinfo& that) const;
 
-		inline bool operator==(const typeinfo& that) const;
+		/*inline*/ bool operator==(const typeinfo& that) const;
 	};
 
 
