@@ -10,7 +10,7 @@ namespace moirai
 	public:
 		pointer_handle(T p) 
 		{
-			if (ptr == nullptr)
+			if (p == nullptr)
 				throw std::invalid_argument("pointer_handle argument must not be nullptr");
 			else
 				ptr = p;
@@ -28,7 +28,7 @@ namespace moirai
 		}
 
 	private:
-		T ptr;
+		T ptr = nullptr;
 	};
 
 
