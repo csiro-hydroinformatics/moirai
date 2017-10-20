@@ -4,6 +4,16 @@
 
 namespace moirai
 {
+	/**
+	 * \class	pointer_handle
+	 *
+	 * \brief	A handle around a pointer. The intended use for some consumers of a C API with opaque structures. 
+	 * 			Some constructs such as Rcpp's XPtr classes work with a C++ object rather then C void* - this class can be used for this. 
+	 * 			This may be of use for other higher level languages - to be determined.
+	 *
+	 * \tparam	T	Generic type parameter.
+	 */
+
 	template<typename T=void*>
 	class pointer_handle
 	{

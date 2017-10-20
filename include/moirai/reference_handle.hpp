@@ -42,6 +42,8 @@ namespace moirai
 		virtual void * get_void_ptr() = 0;
 		virtual long count() const = 0;
 
+		virtual ~cast_ptr_provider() {/*Nothing*/}
+
 	private:
 
 		//// The following uses a try/catch statement for some logic. This is usually a no-no, 

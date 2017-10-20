@@ -30,6 +30,21 @@
     <ClInclude Include="..\include\moirai\setup_modifiers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\moirai\extern_c_api_as_opaque.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\moirai\extern_c_api_as_transparent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\moirai\opaque_pointers.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\moirai\reference_handle_test_helper.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\moirai\reference_type_converters.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="reference_handle.cpp">

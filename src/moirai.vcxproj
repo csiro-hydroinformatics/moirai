@@ -46,9 +46,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\moirai\error_reporting.h" />
+    <ClInclude Include="..\include\moirai\extern_c_api_as_opaque.h" />
+    <ClInclude Include="..\include\moirai\extern_c_api_as_transparent.h" />
+    <ClInclude Include="..\include\moirai\opaque_pointers.hpp" />
     <ClInclude Include="..\include\moirai\reference_handle.h" />
     <ClInclude Include="..\include\moirai\reference_handle.hpp" />
     <ClInclude Include="..\include\moirai\reference_handle_map_export.h" />
+    <ClInclude Include="..\include\moirai\reference_handle_test_helper.hpp" />
+    <ClInclude Include="..\include\moirai\reference_type_converters.hpp" />
     <ClInclude Include="..\include\moirai\setup_modifiers.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)/Microsoft.Cpp.targets" />
