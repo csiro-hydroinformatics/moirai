@@ -1,6 +1,6 @@
 #define CATCH_CONFIG_MAIN  // This tells catch to provide a main() - only do this in one cpp file
 
-#include "catch.hpp"
+#include "catch/catch.hpp"
 #include "../moirai_test_lib/species.h"
 
 #define USING_MOIRAI_API
