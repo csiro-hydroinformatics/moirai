@@ -1,8 +1,9 @@
 #pragma once
 
 #include "../../include/moirai/reference_type_converters.hpp"
+#include "setup_modifiers.h"
 
-#define MOIRAI_TEST_CLASSES_ATTR __declspec(dllexport)
+#define MOIRAI_TEST_CLASSES_ATTR SPECIES_API
 
 namespace moirai
 {

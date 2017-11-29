@@ -10,7 +10,7 @@ using std::vector;
 using namespace moirai;
 using namespace moirai::tests;
 
-#define CHECKED_RETRIEVE_PTR(T, x)	(as_raw_pointer<T>(x))
+// #define CHECKED_RETRIEVE_PTR(T, x)	(as_raw_pointer<T>(x))
 
 TEST_CASE("Checks that reference_handle can be checked to be of an expected type without crash if using CHECKED_RETRIEVE_PTR", "[Moirai behavior]")
 {

@@ -5,6 +5,7 @@
 #ifdef _WIN32
 #define STRDUP _strdup
 #else
+#include <string.h>
 #define STRDUP strdup
 #endif
 

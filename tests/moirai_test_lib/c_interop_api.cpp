@@ -2,9 +2,11 @@
 
 #include "moirai/reference_handle_map_export.h"
 
+
 #ifdef _WIN32
 #define STRDUP _strdup
 #else
+#include <string.h>
 #define STRDUP strdup
 #endif
 

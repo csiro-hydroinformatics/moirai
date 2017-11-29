@@ -21,6 +21,30 @@ SET (${this_target}_SOURCE_FILES
     src/reference_handle_map_export.cpp
 )
 
+# moirai_test
+SET (moirai_test_SOURCE_FILES
+  ./tests/moirai_test/main.cpp
+)
+# moirai_test_api
+SET (moirai_test_api_SOURCE_FILES
+  ./tests/moirai_test_api/main.cpp
+)
+# moirai_test_lib
+SET (moirai_test_lib_SOURCE_FILES
+  ./tests/moirai_test_lib/c_interop_api.cpp
+  ./tests/moirai_test_lib/species.cpp
+)
+# moirai_test_lib_a
+SET (moirai_test_lib_a_SOURCE_FILES
+  ./tests/moirai_test_lib_a/c_interop_api.cpp
+  ./tests/moirai_test_lib_a/domain_a.cpp
+)
+# moirai_test_lib_b
+SET (moirai_test_lib_b_SOURCE_FILES
+  ./tests/moirai_test_lib_b/c_interop_api.cpp
+  ./tests/moirai_test_lib_b/domain_b.cpp
+)
+
 ## section: header files
 # Add your header files here(one file per line), please SORT in alphabetical order for future maintenance!
 
@@ -33,6 +57,7 @@ include/moirai/opaque_pointers.hpp
 include/moirai/reference_handle.h
 include/moirai/reference_handle.hpp
 include/moirai/reference_handle_map_export.h
+include/moirai/reference_handle_test_helper.hpp
 include/moirai/reference_type_converters.hpp
 include/moirai/setup_modifiers.h
 )
@@ -63,9 +88,24 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 ## section: add target
 ADD_LIBRARY(${this_target} SHARED ${${this_target}_SOURCE_FILES} )
 
+# moirai_test
+ADD_executable(moirai_test ${moirai_test_SOURCE_FILES} )
+# moirai_test_api
+ADD_executable(moirai_test_api ${moirai_test_api_SOURCE_FILES} )
+# moirai_test_lib
+ADD_LIBRARY(moirai_test_lib SHARED ${moirai_test_lib_SOURCE_FILES} )
+# moirai_test_lib_a
+ADD_LIBRARY(moirai_test_lib_a SHARED ${moirai_test_lib_a_SOURCE_FILES} )
+# moirai_test_lib_b
+ADD_LIBRARY(moirai_test_lib_b SHARED ${moirai_test_lib_b_SOURCE_FILES} )
+
 ## section: set link libraries
-TARGET_LINK_LIBRARIES( ${this_target}
-)
+TARGET_LINK_LIBRARIES( ${this_target})
+TARGET_LINK_LIBRARIES( moirai_test_lib ${this_target})
+TARGET_LINK_LIBRARIES( moirai_test moirai_test_lib)
+TARGET_LINK_LIBRARIES( moirai_test_lib_b ${this_target})
+TARGET_LINK_LIBRARIES( moirai_test_lib_a moirai_test_lib_b)
+TARGET_LINK_LIBRARIES( moirai_test_api moirai_test_lib_a moirai_test_lib)
 
 # Files to be installed - used by packaging stuff below
 INSTALL(FILES ${${this_target}_HEADER_FILES} DESTINATION include/moirai)

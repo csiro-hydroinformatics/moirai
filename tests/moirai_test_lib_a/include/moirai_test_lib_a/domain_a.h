@@ -1,8 +1,9 @@
 #pragma once
 
 #include "../../../moirai_test_lib_b/include/moirai_test_lib_b/domain_b.h"
+#include "setup_modifiers.h"
 
-#define MOIRAI_TEST_A_CLASSES_ATTR __declspec(dllexport)
+#define MOIRAI_TEST_A_CLASSES_ATTR DOMAIN_A_API
 
 namespace moirai
 {
