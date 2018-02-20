@@ -40,15 +40,49 @@ This should be usable by any recent C++ compiler. This has been used by projects
 
 Unit tests use the ["Catch" unit testing framework](https://github.com/philsquared/Catch).
 
-# Related work
-
-I found out the [Loki](http://loki-lib.sourceforge.net/html/main.html) library. Nifty work, but a much larger and possibly different scope, more complicated. I have not thoroughly tasted (sic).
-
-Moirai is not an API bindings generator. [SWIG](http://swig.org) is. That said I assessed for most C API I have designed that I was [better off with my own](https://github.com/jmp75/rcpp-wrapper-generation), though.
-
 # Getting started
 
 You may have a look at the unit tests under the 'tests' folder, in particular moirai_test_api and moirai_test_lib which are the closest to a typical use case. moirai_test is the next level you'll then want to look at.
 
 You can follow [a walkthrough](./doc/Walkthrough.md) derived from the unit tests.
+
+# Compiling
+
+`moirai` is largely header-only for use in your projects, however there is a compiled shared library, and this is a deliberate design choice.
+
+## Windows
+
+You can use the solution file under the `tests` folder. In order to compile the unit tests, you will need to use the template file `moirai.props.in`, copy it to your `Documents` folder (a.k.a. 'My Documents') e.g. to `C:\Users\username\Documents\moirai.props`. You likely need to adapt the line `<Moirai_IncludePath>C:/local/include</Moirai_IncludePath>`. This should be the folder where `catch\catch.hpp` is located (see Requirements). Leave other lines in `moirai.props` unchanged.
+
+## Linux
+
+```sh
+INSTALL_PREFIX=/usr/local # adapt
+GITHUB_REPOS=~/src/github_jm # adapt
+
+CLEAN_BUILD="rm -rf ../build/*"
+
+CXX_COMP=-DCMAKE_CXX_COMPILER=g++
+C_COMP=-DCMAKE_C_COMPILER=gcc
+BUILD_CONFIG="-DCMAKE_BUILD_TYPE=Release"
+# BUILD_CONFIG="-DCMAKE_BUILD_TYPE=Debug"
+
+CM="cmake ${CXX_COMP} ${C_COMP} ${BUILD_CONFIG} -DBUILD_SHARED_LIBS=ON .."
+SUDO_CMD="sudo"
+cd ${GITHUB_REPOS}/moirai
+mkdir -p build ; cd build
+$CLEAN_BUILD
+$CM
+make
+./moirai_test
+./moirai_test_api
+
+$SUDO_CMD make install
+```
+
+# Related work
+
+I found out the [Loki](http://loki-lib.sourceforge.net/html/main.html) library. Nifty work, but a much larger and possibly different scope, more complicated. I have not thoroughly tasted (sic).
+
+Moirai is not an API bindings generator. [SWIG](http://swig.org) is. That said I assessed for most C API I have designed that I was [better off with my own](https://github.com/jmp75/rcpp-wrapper-generation), though.
 
