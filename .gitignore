@@ -14,3 +14,9 @@ ipch/
 
 *.opendb
 *.db
+src/obj/
+*.metaproj
+*.tmp
+*/.vs/*
+*.cache
+*.user
