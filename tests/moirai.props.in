@@ -4,7 +4,7 @@ This file is a template from which you can set up a property file that matches t
 -->
 <Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="UserMacros">
-    <Moirai_IncludePath>C:/local/include/catch</Moirai_IncludePath>
+    <Moirai_IncludePath>C:/local/include</Moirai_IncludePath>
   </PropertyGroup>
     <Target Name="ValidatePaths">  
     <Error Condition="!exists('$(Moirai_IncludePath)')" Text="Moirai_IncludePath='$(Moirai_IncludePath)' not found" />
