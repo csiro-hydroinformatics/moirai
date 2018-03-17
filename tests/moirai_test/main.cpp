@@ -95,4 +95,16 @@ TEST_CASE("Reference counting via the API", "[Moirai behavior]")
 	REQUIRE_FALSE(reference_handle_map::instance().has_handle(h));
 }
 
+TEST_CASE("Checking the status of a reference handle via the API", "[Moirai behavior]")
+{
+	auto h = new homo_erectus();
+	reference_handle<homo_erectus>* p = new reference_handle<homo_erectus>(h);
+
+	string status = p->get_status();
+	REQUIRE(status == "Reference handle for class moirai::tests::homo_erectus. Reference count is 1. Raw pointer appears valid.");
+	delete h;
+	status = p->get_status();
+	REQUIRE(status == "Woah! FUBAR!");
+	delete p;
+}
 

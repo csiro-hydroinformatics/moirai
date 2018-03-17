@@ -59,7 +59,7 @@ namespace moirai
 
 	opaque_ptr_provider::~opaque_ptr_provider() {}
 
-	const char* opaque_ptr_provider::wrapped_type_name() { return wrapped_type_info.name(); }
+	const char* opaque_ptr_provider::wrapped_type_name() const { return wrapped_type_info.name(); }
 
 	typeinfo::typeinfo()
 		: p_(nullptr)

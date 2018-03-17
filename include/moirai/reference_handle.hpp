@@ -166,6 +166,29 @@ namespace moirai
 			return (void*)(get_ptr());
 		}
 
+		string get_status()
+		{
+			string tname(this->wrapped_type_name());
+			long c = this->count();
+			string msg("Reference handle for ");
+			msg += tname;
+			msg += string(". Reference count is ") + std::to_string(c);
+
+			string tryRetrieve = ". Raw pointer appears valid.";
+
+			try
+			{
+				T* ptr = this->get_ptr();
+				T blah = *ptr;
+			}
+			catch (std::exception& e)
+			{
+				tryRetrieve = string("Error trying to retrieve 'raw' pointer: ");
+				tryRetrieve += string(e.what());
+			}
+			return msg + tryRetrieve;
+		}
+
 	private:
 
 		/**
@@ -228,6 +251,19 @@ namespace moirai
 		return result;
 	}
 
+	/**
+	 * \fn	template <typename T> T* as_raw_pointer(opaque_ptr_provider* sharedPtr)
+	 *
+	 * \brief	Gets the raw pointer that is wrapped by the opaque pointer
+	 *
+	 * \exception	std::invalid_argument	Thrown when an invalid argument error condition occurs.
+	 *
+	 * \tparam	T	Generic type parameter, the type of the inner C++ object wrapped.
+	 * \param [in,out]	sharedPtr	the opaque pointer, wrapper around a (pointer to) a C++ object
+	 *
+	 * \return	a pointer to a T object wrapped by the opaque pointer.
+	 */
+
 	template <typename T>
 	T* as_raw_pointer(opaque_ptr_provider* sharedPtr)
 	{
@@ -236,7 +272,18 @@ namespace moirai
 		reference_handle<T>* sp = dynamic_cast<reference_handle<T>*>(sharedPtr);
 		if (sp != nullptr)
 		{
-			return sp->get_ptr();
+			try
+			{
+				return sp->get_ptr();
+			}
+			catch (std::exception& e) 
+			{ 
+				string tname(sp->wrapped_type_name());
+				string msg("Error trying to retrieve typed 'raw' pointer to object of type ");
+				msg = msg + tname + string(". ");
+				msg = msg + string(e.what());
+				throw std::invalid_argument(msg);
+			}
 		}
 		else
 		{
@@ -255,6 +302,14 @@ namespace moirai
 		}
 	}
 
+	char* inspect_reference_state(opaque_ptr_provider* sharedPtr)
+	{
+		if (sharedPtr == nullptr)
+			throw std::invalid_argument("Pointer is nullptr - not accepted by the API");
+		string tname(sharedPtr->wrapped_type_name());
+		void* p = sharedPtr->get_void_ptr();
+		long c = sharedPtr->count();
+	}
 }
 
 #ifndef FORCE_OPAQUE_PTR_TYPECAST
