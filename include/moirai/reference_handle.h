@@ -123,7 +123,7 @@ namespace moirai
 		virtual ~opaque_ptr_provider();
 		virtual void * get_void_ptr() = 0;
 		virtual long count() const = 0;
-		const char* wrapped_type_name();
+		const char* wrapped_type_name() const;
 	};
 
 }
