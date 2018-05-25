@@ -1,6 +1,9 @@
 ﻿MOIRAI: Manage C++ Objects's lifetime when exposed through a C API
 =====================================================
 
+Windows - master: [![Master build status](https://ci.appveyor.com/api/projects/status/8fobpshmwrmt3vmd/branch/master?svg=true)](https://ci.appveyor.com/project/jmp75/moirai/branch/master) devel: [![Devel build status](https://ci.appveyor.com/api/projects/status/8fobpshmwrmt3vmd/branch/devel?svg=true)](https://ci.appveyor.com/project/jmp75/moirai/branch/devel)
+
+
 # Purpose
 
 This C++ library is designed to help handling C++ objects from so called opaque pointers, via a C API. Prominent features are:
