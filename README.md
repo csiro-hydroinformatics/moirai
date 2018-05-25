@@ -3,6 +3,8 @@
 
 Windows - master: [![Master build status](https://ci.appveyor.com/api/projects/status/8fobpshmwrmt3vmd/branch/master?svg=true)](https://ci.appveyor.com/project/jmp75/moirai/branch/master) devel: [![Devel build status](https://ci.appveyor.com/api/projects/status/8fobpshmwrmt3vmd/branch/devel?svg=true)](https://ci.appveyor.com/project/jmp75/moirai/branch/devel)
 
+Linux - master: [![Linux master Build Status](https://travis-ci.org/jmp75/moirai.svg?branch=master "Linux master Build Status")](https://travis-ci.org/jmp75/moirai/builds)
+
 
 # Purpose
 
