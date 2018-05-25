@@ -15,7 +15,7 @@ else()
 endif()
 
 # Find catch.hpp
-find_path (catch_INCLUDE_DIRS NAMES catch/catch.hpp PATHS )
+find_path (catch_INCLUDE_DIRS NAMES catch/catch.hpp PATHS ./include)
 
 ## section: include directory
 INCLUDE_DIRECTORIES(

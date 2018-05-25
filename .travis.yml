@@ -2,12 +2,9 @@ language: cpp
 dist: trusty
 
 script:
-- CXX_COMP=-DCMAKE_CXX_COMPILER=g++
-- C_COMP=-DCMAKE_C_COMPILER=gcc
-- BUILD_CONFIG="-DCMAKE_BUILD_TYPE=Release"
 - mkdir -p build
 - cd build
-- cmake ${CXX_COMP} ${C_COMP} ${BUILD_CONFIG} -DBUILD_SHARED_LIBS=ON ..
+- cmake -DCMAKE_CXX_COMPILER=g++ -DCMAKE_C_COMPILER=gcc -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON ..
 - make
 - ./moirai_test
 - ./moirai_test_api
