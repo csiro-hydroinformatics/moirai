@@ -36,7 +36,7 @@
   <ImportGroup Label="CustomPropertySheets">
     <Import Project="$(USERPROFILE)\My Documents\moirai.props" Condition="exists('$(USERPROFILE)\My Documents\moirai.props')" />
     <!-- below is a fallback for appeveyor -->
-    <Import Project="..\moirai.props.in" Condition="!exists('$(USERPROFILE)\My Documents\moirai.props')" />
+    <Import Project="C:\projects\moirai\tests\moirai.props.in" Condition="!exists('$(USERPROFILE)\My Documents\moirai.props')" />
   </ImportGroup>
   <PropertyGroup>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);../../include;$(Moirai_IncludePath)</IncludePath>
