@@ -90,22 +90,37 @@ namespace moirai
 	class reference_handle : public cast_ptr_provider
 	{
 	public:
+		/**
+		* \brief	reference_handle constructor
+		*
+		* \param	object	  	const reference to an object, that must have a deep copy constructor
+		*/
 		reference_handle(const T& object) : cast_ptr_provider(typeid(T))
 		{
 			T* p = new T(object);
-			sharedPtr = find_shared_ptr(p);
+			_shared_pointer = find_shared_ptr(p);
 		}
 
+		/**
+		* \brief	reference_handle constructor
+		*
+		* \param	p	  	pointer to the object this reference_handle will wrap. It may already be wrapped by another reference_handle.
+		*/
 		reference_handle(T* p) : cast_ptr_provider(typeid(T))
 		{
 			if (p == nullptr)
 				throw std::invalid_argument("Pointer must not be nullptr");
-			sharedPtr = find_shared_ptr(p);
+			_shared_pointer = find_shared_ptr(p);
 		}
 
+		/**
+		* \brief	reference_handle copy constructor
+		*
+		* \param	ptr	  	reference_handle to copy.
+		*/
 		reference_handle(const reference_handle<T>& ptr) : cast_ptr_provider(typeid(T))
 		{
-			sharedPtr = find_shared_ptr(ptr.sharedPtr.get());
+			_shared_pointer = find_shared_ptr(ptr._shared_pointer.get());
 		}
 
 		~reference_handle()
@@ -113,28 +128,20 @@ namespace moirai
 			reference_handle_map::instance().release(this->get_ptr());
 		}
 
+		/**
+		* \brief	create a new reference_handle wrapping the same pointer as this reference_handle
+		*/
 		reference_handle<T>* new_reference_handle()
 		{
 			return new reference_handle<T>(get_ptr());
 		}
 
-		/** \brief	T* casting operator. */
-		//explicit operator T*() 
-		//{ 
-		//	return get_ptr(); 
-		//}
-
+		/** \brief casting operator (dynamic_cast) to a type U*. applies dynamic_cast to the inner wrapped pointer */
 		template<typename U>
 		explicit operator U*() const
 		{
 			return dynamic_cast<U*>(get_ptr());
 		}
-
-		//template<typename U>
-		//bool can_cast_to()
-		//{
-		//	return std::is_convertible<T, U>::value;
-		//}
 
 		/**
 		 * \brief	Gets the number of reference_handle referencing the wrapped object.
@@ -143,7 +150,7 @@ namespace moirai
 		 */
 		long count() const
 		{
-			return sharedPtr.use_count() - 1;
+			return _shared_pointer.use_count() - 1;
 		}
 
 		/**
@@ -153,7 +160,7 @@ namespace moirai
 		 */
 		T* get_ptr()
 		{
-			return sharedPtr.get();
+			return _shared_pointer.get();
 		}
 
 		/**
@@ -186,68 +193,80 @@ namespace moirai
 			return std::static_pointer_cast<void>(ptr);
 		}
 
-		//template <typename U>
-		//struct DefaultDeleter {
-		//	void operator()(T* t) { delete static_cast<U*>(t); }
-		//};
 		std::shared_ptr<T> find_shared_ptr(T* p)
 		{
 			return std::static_pointer_cast<T>(reference_handle_map::instance().get(p, create_shared_ptr));
 		}
-		std::shared_ptr<T> sharedPtr;
+		std::shared_ptr<T> _shared_pointer;
 	};
 
+	/**
+	* \brief	Try to downcast the inner pointer of the wrapper. Throw an exception if impossible. 
+	*
+	* \tparam	T	type parameter to downcast the inner pointer to (i.e. can it be cast to a T*) 
+	*
+	* \param	ptr_wrapper	wrapper of the raw pointer to test for downcasting.
+	* \return	Downcast pointer to the object wrapped by ptr_wrapper.
+	*/
 	template <typename T>
-	T* checked_downcast(opaque_ptr_provider* sharedPtr)
+	T* checked_downcast(opaque_ptr_provider* ptr_wrapper)
 	{
-		if (sharedPtr == nullptr)
+		if (ptr_wrapper == nullptr)
 			throw std::invalid_argument("The pointer to a reference handle is nullptr");
-		T* result = dynamic_cast<T*>(sharedPtr);
+		T* result = dynamic_cast<T*>(ptr_wrapper);
 		if (result == nullptr)
 		{
 			string expected(typeid(T).name());
-			string actual(sharedPtr->wrapped_type_name());
+			string actual(ptr_wrapper->wrapped_type_name());
 			string errorMsg = string("Expected type ") + expected + ", but got an opaque pointer to a type " + actual;
 			throw std::invalid_argument(errorMsg);
 		}
 		return result;
 	}
 
+	/**
+	* \brief	Try to downcast the inner pointer of the wrapper, and return a new down-typed reference_handle. Throw an exception if impossible.
+	*
+	* \tparam	T	type parameter to downcast the inner pointer to (i.e. can it be cast to a T*)
+	*
+	* \param	ptr_wrapper	wrapper of the raw pointer to test for downcasting.
+	* \return	new reference_handle around a downcast pointer to the object wrapped by ptr_wrapper.
+	*/
 	template <typename T>
-	reference_handle<T>* checked_reference_handle(opaque_ptr_provider* sharedPtr)
+	reference_handle<T>* checked_reference_handle(opaque_ptr_provider* ptr_wrapper)
 	{
-		return checked_downcast<reference_handle<T>>(sharedPtr);
+		return checked_downcast<reference_handle<T>>(ptr_wrapper);
 	}
 
+	/**
+	* \brief	Unwrap a pointer wrapper, casting to a specific type the inner pointer
+	*
+	* \tparam	T	type parameter to cast the inner, raw pointer to (i.e. can it be cast to a T* )
+	*
+	* \param	ptr_wrappers	wrapper of the raw pointer to test for casting.
+	*
+	* \return	raw pointer of type T* to the object wrapped
+	*/
 	template <typename T>
-	T** as_raw_pointers(opaque_ptr_provider** sharedPtrs, int n)
+	T* as_raw_pointer(opaque_ptr_provider* ptr_wrapper)
 	{
-		T** result = new T*[n];
-		for (size_t i = 0; i < n; i++)
-			result[i] = (T*)sharedPtrs[i]->get_void_ptr(); // TODO: replace this cast with something more resilient. 
-		return result;
-	}
-
-	template <typename T>
-	T* as_raw_pointer(opaque_ptr_provider* sharedPtr)
-	{
-		if (sharedPtr == nullptr)
+		if (ptr_wrapper == nullptr)
 			throw std::invalid_argument("Pointer is nullptr - not accepted by the API");
-		reference_handle<T>* sp = dynamic_cast<reference_handle<T>*>(sharedPtr);
+		reference_handle<T>* sp = dynamic_cast<reference_handle<T>*>(ptr_wrapper);
 		if (sp != nullptr)
 		{
 			return sp->get_ptr();
 		}
 		else
 		{
-			cast_ptr_provider* cpp = dynamic_cast<cast_ptr_provider*>(sharedPtr);
+			cast_ptr_provider* cpp = dynamic_cast<cast_ptr_provider*>(ptr_wrapper);
 			if (cpp == nullptr)
 				throw std::invalid_argument("Opaque pointer wrapper is not a cast_ptr_provider - not accepted by the API");
 			T* result = cpp->dynamic_cast_to<T>();
 			if (result == nullptr)
 			{
 				string expected(typeid(T).name());
-				string actual(sharedPtr->wrapped_type_name());
+				string actual(ptr_wrapper->wrapped_type_name());
 				string errorMsg = string("Cannot cast pointer to ") + actual + " to a pointer to " + expected;
 				throw std::invalid_argument(errorMsg);
 			}
@@ -255,11 +274,29 @@ namespace moirai
 		}
 	}
 
+	/**
+	* \brief	Unwrap several pointer wrappers, casting to a specific type each inner pointers.
+	*
+	* \tparam	T	type parameter to cast the inner, raw pointers to (i.e. can it be cast to a T* )
+	*
+	* \param	ptr_wrappers	array of wrappers of the raw pointers to test for casting.
+	*
+	* \return	raw pointers of type T* to each object wrapped
+	*/
+	template <typename T>
+	T** as_raw_pointers(opaque_ptr_provider** ptr_wrappers, int n)
+	{
+		T** result = new T*[n];
+		for (size_t i = 0; i < n; i++)
+			result[i] = as_raw_pointer<T>(ptr_wrappers[i]);
+		return result;
+	}
+
 }
 
 #ifndef FORCE_OPAQUE_PTR_TYPECAST
 #define CHECKED_RETRIEVE_PTR(T, x)    (moirai::as_raw_pointer<T>(x))
-#define RETRIEVE_POINTERS_FROM_SHPTR(T, sharedPtrs, n) moirai::as_raw_pointers<T>(sharedPtrs, n)
+#define RETRIEVE_POINTERS_FROM_SHPTR(T, ptr_wrappers, n) moirai::as_raw_pointers<T>(ptr_wrappers, n)
 #else
 #define CHECKED_RETRIEVE_PTR(T, x)    (moirai::as_raw_pointer<T>((moirai::opaque_ptr_provider*)x))
 #endif
