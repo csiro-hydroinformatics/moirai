@@ -14,7 +14,7 @@ environment:
 branches:
   only:
   - master
-  - devel
+  - testing
 
 build_script:
 - cmd: >-

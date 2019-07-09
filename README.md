@@ -1,10 +1,9 @@
 ﻿MOIRAI: Manage C++ Objects's lifetime when exposed through a C API
 =====================================================
 
-Windows - master: [![Master build status](https://ci.appveyor.com/api/projects/status/8fobpshmwrmt3vmd/branch/master?svg=true)](https://ci.appveyor.com/project/jmp75/moirai/branch/master) devel: [![Devel build status](https://ci.appveyor.com/api/projects/status/8fobpshmwrmt3vmd/branch/devel?svg=true)](https://ci.appveyor.com/project/jmp75/moirai/branch/devel)
+Windows - master: [![Master build status](https://ci.appveyor.com/api/projects/status/8fobpshmwrmt3vmd/branch/master?svg=true)](https://ci.appveyor.com/project/jmp75/moirai/branch/master) testing: [![testing build status](https://ci.appveyor.com/api/projects/status/8fobpshmwrmt3vmd/branch/testing?svg=true)](https://ci.appveyor.com/project/jmp75/moirai/branch/testing)
 
-Linux - master: [![Linux master Build Status](https://travis-ci.org/jmp75/moirai.svg?branch=master "Linux master Build Status")](https://travis-ci.org/jmp75/moirai/builds)
-
+Linux - master: [![Linux master Build Status](https://travis-ci.org/jmp75/moirai.svg?branch=master "Linux master Build Status")](https://travis-ci.org/jmp75/moirai/builds) testing: [![Linux testing Build Status](https://travis-ci.org/jmp75/moirai.svg?branch=testing "Linux testing Build Status")](https://travis-ci.org/jmp75/moirai/builds)
 
 # Purpose
 

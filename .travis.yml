@@ -1,6 +1,11 @@
 language: cpp
 dist: trusty
 
+branches:
+  only:
+  - master
+  - testing
+
 script:
 - mkdir -p build
 - cd build
