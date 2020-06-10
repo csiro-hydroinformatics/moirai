@@ -20,3 +20,4 @@ src/obj/
 */.vs/*
 *.cache
 *.user
+build/
