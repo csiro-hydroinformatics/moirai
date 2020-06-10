@@ -4,6 +4,7 @@ cmake_minimum_required(VERSION 3.0)
 SET (this_target moirai)
 PROJECT(${this_target})
 
+SET (VERSION 1.0)
 
 if (WIN32)
     set(BOOST_INCLUDEDIR "c:/local/include")
