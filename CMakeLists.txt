@@ -6,17 +6,9 @@ PROJECT(${this_target})
 
 SET (VERSION 1.0)
 
-if (WIN32)
-    set(BOOST_INCLUDEDIR "c:/local/include")
-    set(BOOST_LIBRARYDIR "c:/local/libs/64")
-else()
-    list(APPEND CMAKE_MODULE_PATH "/usr/local/share/cmake/Modules")
-    list(APPEND CMAKE_MODULE_PATH "~/share/cmake/Modules") # Pearcey
-    list(APPEND CMAKE_MODULE_PATH "/data/projects/hydroforecast/usr/local/share/cmake/Modules") # Pearcey
-endif()
-
 # Find catch.hpp
-find_path (catch_INCLUDE_DIRS NAMES catch/catch.hpp PATHS ./include)
+find_path (catch_INCLUDE_DIRS NAMES catch/catch.hpp PATHS )
+# find_path (catch_INCLUDE_DIRS NAMES catch/catch.hpp PATHS ./include)
 
 ## section: include directory
 INCLUDE_DIRECTORIES(
@@ -65,21 +57,17 @@ SET (moirai_test_lib_b_SOURCE_FILES
 
 
 SET(${this_target}_HEADER_FILES
-include/moirai/error_reporting.h
-include/moirai/extern_c_api_as_opaque.h
-include/moirai/extern_c_api_as_transparent.h
-include/moirai/opaque_pointers.hpp
-include/moirai/reference_handle.h
-include/moirai/reference_handle.hpp
-include/moirai/reference_handle_map_export.h
-include/moirai/reference_handle_test_helper.hpp
-include/moirai/reference_type_converters.hpp
-include/moirai/setup_modifiers.h
+  ./include/moirai/error_reporting.h
+  ./include/moirai/extern_c_api_as_opaque.h
+  ./include/moirai/extern_c_api_as_transparent.h
+  ./include/moirai/opaque_pointers.hpp
+  ./include/moirai/reference_handle.h
+  ./include/moirai/reference_handle.hpp
+  ./include/moirai/reference_handle_map_export.h
+  ./include/moirai/reference_handle_test_helper.hpp
+  ./include/moirai/reference_type_converters.hpp
+  ./include/moirai/setup_modifiers.h
 )
-
-IF (ENABLE_CODECOVERAGE)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CMAKE_CXX_FLAGS_COVERAGE}")
-ENDIF()
 
 ## section: precompiled header
 #ADD_MSVC_PRECOMPILED_HEADER("precompiled.h" "precompiled.cpp" MySources)
@@ -100,19 +88,33 @@ ADD_DEFINITIONS(
 # JM needed to use this as of 2016-07, after an upgrade to latest Debian setup. The Add_definitions macro was not working, somehow.
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
+
+IF (ENABLE_CODECOVERAGE)
+  INCLUDE(CodeCoverage)
+  append_coverage_compiler_flags()
+ENDIF()
+  
 ## section: add target
 ADD_LIBRARY(${this_target} SHARED ${${this_target}_SOURCE_FILES} )
 
-# moirai_test
-ADD_executable(moirai_test ${moirai_test_SOURCE_FILES} )
-# moirai_test_api
-ADD_executable(moirai_test_api ${moirai_test_api_SOURCE_FILES} )
-# moirai_test_lib
-ADD_LIBRARY(moirai_test_lib SHARED ${moirai_test_lib_SOURCE_FILES} )
-# moirai_test_lib_a
-ADD_LIBRARY(moirai_test_lib_a SHARED ${moirai_test_lib_a_SOURCE_FILES} )
-# moirai_test_lib_b
-ADD_LIBRARY(moirai_test_lib_b SHARED ${moirai_test_lib_b_SOURCE_FILES} )
+list(APPEND EXE_NAMES moirai_test moirai_test_api)
+list(APPEND LIB_NAMES moirai_test_lib moirai_test_lib_a moirai_test_lib_b)
+
+foreach(TARGET_NAME IN LISTS EXE_NAMES)
+  # set(src_files "${TARGET_NAME}_SOURCE_FILES")
+  ADD_executable(${TARGET_NAME} ${${TARGET_NAME}_SOURCE_FILES} )
+  IF (ENABLE_CODECOVERAGE)
+    setup_target_for_coverage_gcovr_html(
+      NAME ${TARGET_NAME}_coverage
+      EXECUTABLE ${TARGET_NAME}
+    )
+  endif()
+endforeach()
+
+foreach(TARGET_NAME IN LISTS LIB_NAMES)
+  # set(src_files "${TARGET_NAME}_SOURCE_FILES")
+  ADD_LIBRARY(${TARGET_NAME} SHARED ${${TARGET_NAME}_SOURCE_FILES} )
+endforeach()
 
 ## section: set link libraries
 TARGET_LINK_LIBRARIES( ${this_target})
@@ -124,7 +126,6 @@ TARGET_LINK_LIBRARIES( moirai_test_api moirai_test_lib_a moirai_test_lib)
 
 # Files to be installed - used by packaging stuff below
 INSTALL(FILES ${${this_target}_HEADER_FILES} DESTINATION include/moirai)
-
 
 ########### Add uninstall target ###############
 # uninstall target
