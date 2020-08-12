@@ -98,15 +98,25 @@ ENDIF()
 ADD_LIBRARY(${this_target} SHARED ${${this_target}_SOURCE_FILES} )
 
 list(APPEND EXE_NAMES moirai_test moirai_test_api)
+list(APPEND GCOV_EXCLUDES "tests/moirai_test_api/*" "tests/moirai_test/*")
 list(APPEND LIB_NAMES moirai_test_lib moirai_test_lib_a moirai_test_lib_b)
 
-foreach(TARGET_NAME IN LISTS EXE_NAMES)
-  # set(src_files "${TARGET_NAME}_SOURCE_FILES")
+
+# for cmake 3.17+ it would be (much) better to use ZIP_LISTS
+# foreach(TARGET_NAME EXCL IN ZIP_LISTS EXE_NAMES GCOV_EXCLUDES)
+# meanwhile many thanks to https://stackoverflow.com/a/7933072/2752565 for the working example:
+list(LENGTH EXE_NAMES len1)
+math(EXPR len2 "${len1} - 1")
+foreach(val RANGE ${len2})
+  list(GET EXE_NAMES ${val} TARGET_NAME)
+  list(GET GCOV_EXCLUDES ${val} EXCL)
   ADD_executable(${TARGET_NAME} ${${TARGET_NAME}_SOURCE_FILES} )
   IF (ENABLE_CODECOVERAGE)
     setup_target_for_coverage_gcovr_html(
       NAME ${TARGET_NAME}_coverage
       EXECUTABLE ${TARGET_NAME}
+      BASE_DIRECTORY "${PROJECT_SOURCE_DIR}"
+      EXCLUDE ${EXCL}
     )
   endif()
 endforeach()
