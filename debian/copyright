@@ -1,15 +1,11 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: moirai
 Upstream-Contact: Jean-Michel Perraud <per202@csiro.au>
-Source: <url://example.com>
-
-Upstream Authors:
-
-    Jean-Michel Perraud <per202@csiro.au>
+Source: <https://github.com/csiro-hydroinformatics/moirai>
 
 Copyright:
 
-    Copyright (C) -2020 CSIRO
+    Copyright (C) 2020 CSIRO
 
 Copyright for catch code:
 Files: include/catch/catch.hpp

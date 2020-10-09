@@ -1,0 +1,4 @@
+usr/include/moirai/*.h*
+
+# usr/lib/*/pkgconfig/*
+# usr/share/pkgconfig/*

@@ -91,3 +91,5 @@ Back to more basic
 
 https://wiki.debian.org/Packaging/Intro?action=show&redirect=IntroDebianPackaging
 
+
+https://www.debian.org/doc/manuals/maint-guide/
