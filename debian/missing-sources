@@ -1,0 +1,2 @@
+# cmake build outputs should not be checked by lintian
+build/*

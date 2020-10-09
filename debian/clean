@@ -1,1 +1,2 @@
-# debian/build/
+# cmake build outputs
+debian/build/
