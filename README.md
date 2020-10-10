@@ -1,9 +1,10 @@
 ﻿MOIRAI: Manage C++ Objects's lifetime when exposed through a C API
 =====================================================
 
+[![Build status](https://ci.appveyor.com/api/projects/status/8fobpshmwrmt3vmd/branch/master?svg=true)](https://ci.appveyor.com/project/jmp75/moirai/branch/master)
 Windows - master: [![Master build status](https://ci.appveyor.com/api/projects/status/8fobpshmwrmt3vmd/branch/master?svg=true)](https://ci.appveyor.com/project/jmp75/moirai/branch/master) testing: [![testing build status](https://ci.appveyor.com/api/projects/status/8fobpshmwrmt3vmd/branch/testing?svg=true)](https://ci.appveyor.com/project/jmp75/moirai/branch/testing)
 
-Linux - master: [![Linux master Build Status](https://travis-ci.org/jmp75/moirai.svg?branch=master "Linux master Build Status")](https://travis-ci.org/jmp75/moirai/builds) testing: [![Linux testing Build Status](https://travis-ci.org/jmp75/moirai.svg?branch=testing "Linux testing Build Status")](https://travis-ci.org/jmp75/moirai/builds)
+Linux - master: [![Linux master Build Status](https://travis-ci.org/csiro-hydroinformatics/moirai.svg?branch=master "Linux master Build Status")](https://travis-ci.org/csiro-hydroinformatics/moirai/builds) testing: [![Linux testing Build Status](https://travis-ci.org/csiro-hydroinformatics/moirai.svg?branch=testing "Linux testing Build Status")](https://travis-ci.org/csiro-hydroinformatics/moirai/builds)
 
 # Purpose
 
@@ -90,5 +91,5 @@ $SUDO_CMD make uninstall
 
 I found out the [Loki](http://loki-lib.sourceforge.net/html/main.html) library. Nifty work, but a much larger and possibly different scope, more complicated. I have not thoroughly tasted (sic).
 
-Moirai is not an API bindings generator. [SWIG](http://swig.org) is. That said I assessed for most C API I have designed that I was [better off with my own](https://github.com/jmp75/rcpp-wrapper-generation), though.
+Moirai is not an API bindings generator. [SWIG](http://swig.org) is. That said I assessed for most C API I have designed that I was [better off with my own](https://github.com/csiro-hydroinformatics/rcpp-wrapper-generation), though.
 
