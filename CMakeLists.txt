@@ -1,25 +1,77 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.12)
 
-## start setting
-SET (this_target moirai)
-PROJECT(${this_target})
+# NOTE: the libpng set of simlinks does not appear to be the prevalent standard, so sticking to libmoirai.so -> libmoirai.so.1 -> libmoirai.so.1.0.3 rather than adopt the libpng scheme
+# SET LIBNAME
+# set(TARGET_LIB_NAME moirai${TARGET_MAJOR}${TARGET_MINOR}) libpng scheme, too peculiar
+set(TARGET_LIB_NAME moirai)
+SET (this_target ${TARGET_LIB_NAME})
 
-SET (VERSION 1.0)
+set(TARGET_MAJOR 1)
+set(TARGET_MINOR 0)
+set(TARGET_RELEASE 1)
+# set(TARGET_NAME libmoirai${TARGET_MAJOR}${TARGET_MINOR})
+set(TARGET_VERSION ${TARGET_MAJOR}.${TARGET_MINOR}.${TARGET_RELEASE})
+SET (VERSION ${TARGET_VERSION})
 
-# Find catch.hpp
-find_path (catch_INCLUDE_DIRS NAMES catch/catch.hpp PATHS )
-# find_path (catch_INCLUDE_DIRS NAMES catch/catch.hpp PATHS ./include)
+PROJECT(${this_target} VERSION ${TARGET_VERSION} DESCRIPTION "Manage C++ Objects's lifetime when exposed through a C API")
+
+include(GNUInstallDirs)
+
+# TODO Credits: https://salsa.debian.org/debian/libpng1.6/-/blob/master/CMakeLists.txt
+# Set a variable with CMake code which:
+# Creates a symlink from src to dest (if possible) or alternatively
+# copies if different.
+include(CMakeParseArguments)
+
+function(create_symlink DEST_FILE)
+
+  cmake_parse_arguments(S "" "FILE;TARGET" "" ${ARGN})
+
+  if(NOT S_TARGET AND NOT S_FILE)
+    message(FATAL_ERROR "create_symlink: Missing TARGET or FILE argument")
+  endif()
+
+  if(S_TARGET AND S_FILE)
+    message(FATAL_ERROR "create_symlink: Both source file ${S_FILE} and build target ${S_TARGET} arguments are present; can only have one.")
+  endif()
+
+  if(S_FILE)
+    # If we don't need to symlink something that's coming from a build target,
+    # we can go ahead and symlink/copy at configure time.
+    if(CMAKE_HOST_WIN32 AND NOT CYGWIN)
+      execute_process(
+        COMMAND "${CMAKE_COMMAND}" -E copy_if_different ${S_FILE} ${DEST_FILE}
+        WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}")
+    else()
+      execute_process(
+        COMMAND ${CMAKE_COMMAND} -E create_symlink ${S_FILE} ${DEST_FILE}
+        WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}")
+    endif()
+  endif()
+
+  if(S_TARGET)
+    # We need to use generator expressions, which can be a bit tricky, so for
+    # simplicity make the symlink a POST_BUILD step and use the TARGET
+    # signature of add_custom_command.
+    if(CMAKE_HOST_WIN32 AND NOT CYGWIN)
+      add_custom_command(TARGET ${S_TARGET} POST_BUILD
+        COMMAND "${CMAKE_COMMAND}" -E copy_if_different $<TARGET_LINKER_FILE_NAME:${S_TARGET}> $<TARGET_LINKER_FILE_DIR:${S_TARGET}>/${DEST_FILE})
+    else()
+      add_custom_command(TARGET ${S_TARGET} POST_BUILD
+        COMMAND "${CMAKE_COMMAND}" -E create_symlink $<TARGET_LINKER_FILE_NAME:${S_TARGET}> $<TARGET_LINKER_FILE_DIR:${S_TARGET}>/${DEST_FILE})
+    endif()
+  endif()
+
+endfunction()
 
 ## section: include directory
 INCLUDE_DIRECTORIES(
 	./include
-   ${catch_INCLUDE_DIRS}
 )
 
 ## section: library directories
-LINK_DIRECTORIES(
-)
-
+# LINK_DIRECTORIES(
+# )
 
 ## section: source files
 # Add your source files here (one file per line), please SORT in alphabetical order for future maintenance
@@ -55,7 +107,6 @@ SET (moirai_test_lib_b_SOURCE_FILES
 ## section: header files
 # Add your header files here(one file per line), please SORT in alphabetical order for future maintenance!
 
-
 SET(${this_target}_HEADER_FILES
   ./include/moirai/error_reporting.h
   ./include/moirai/extern_c_api_as_opaque.h
@@ -78,25 +129,75 @@ SET_SOURCE_FILES_PROPERTIES(${this_target}_HEADER_FILES
 LIST(APPEND ${this_target}_SOURCE_FILES ${${this_target}_HEADER_FILES})
 
 ## section: add definitions
-#   add prefix -D. example> -DSHP
-#  - DO NOT add  the following definitions(already defined in ${OSP_DEFINITIONS}:
-#   -DSHP, -DWIN32, -D_WINDOWS, -D_DEBUG, -D_USRDLL, -D_CRT_SECURE_NO_DEPRECATE
 ADD_DEFINITIONS(
     # -DCMAKE_CXX_FLAGS:STRING=' -std=c++11 '    
     )
-
 # JM needed to use this as of 2016-07, after an upgrade to latest Debian setup. The Add_definitions macro was not working, somehow.
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> testing
 IF (ENABLE_CODECOVERAGE)
   INCLUDE(CodeCoverage)
   append_coverage_compiler_flags()
 ENDIF()
   
 ## section: add target
-ADD_LIBRARY(${this_target} SHARED ${${this_target}_SOURCE_FILES} )
 
+ADD_LIBRARY(${this_target} SHARED ${${this_target}_SOURCE_FILES} )
+set_target_properties(${this_target} PROPERTIES
+  OUTPUT_NAME ${TARGET_LIB_NAME}
+  VERSION ${PROJECT_VERSION}
+  SOVERSION ${TARGET_MAJOR}
+  # CLEAN_DIRECT_OUTPUT 1
+)
+# if(MSVC)
+#   # msvc does not append 'lib' - do it here to have consistent name
+#   set_target_properties(${this_target} PROPERTIES PREFIX "lib")
+#   set_target_properties(${this_target} PROPERTIES IMPORT_PREFIX "lib")
+# endif()
+# target_link_libraries(${this_target} ${ZLIB_LIBRARY} ${M_LIBRARY})
+
+# if(UNIX AND AWK)
+#   if(HAVE_LD_VERSION_SCRIPT)
+#     set_target_properties(${this_target} PROPERTIES LINK_FLAGS
+#       "-Wl,--version-script='${CMAKE_CURRENT_BINARY_DIR}/lib${this_target}.vers'")
+#   elseif(HAVE_SOLARIS_LD_VERSION_SCRIPT)
+#     set_target_properties(${this_target} PROPERTIES LINK_FLAGS
+#       "-Wl,-M -Wl,'${CMAKE_CURRENT_BINARY_DIR}/lib${this_target}.vers'")
+#   endif()
+# endif()
+
+configure_file(${TARGET_LIB_NAME}.pc.in ${TARGET_LIB_NAME}.pc @ONLY)
+
+## Additional material used for unit tests:
+
+list(APPEND EXE_NAMES moirai_test moirai_test_api)
+list(APPEND GCOV_EXCLUDES "tests/moirai_test_api/*" "tests/moirai_test/*")
+list(APPEND LIB_NAMES moirai_test_lib moirai_test_lib_a moirai_test_lib_b)
+
+# for cmake 3.17+ it would be (much) better to use ZIP_LISTS
+# foreach(TARGET_NAME EXCL IN ZIP_LISTS EXE_NAMES GCOV_EXCLUDES)
+# meanwhile many thanks to https://stackoverflow.com/a/7933072/2752565 for the working example:
+list(LENGTH EXE_NAMES len1)
+math(EXPR len2 "${len1} - 1")
+foreach(val RANGE ${len2})
+  list(GET EXE_NAMES ${val} TARGET_NAME)
+  list(GET GCOV_EXCLUDES ${val} EXCL)
+  ADD_executable(${TARGET_NAME} ${${TARGET_NAME}_SOURCE_FILES} )
+  IF (ENABLE_CODECOVERAGE)
+    setup_target_for_coverage_gcovr_html(
+      NAME ${TARGET_NAME}_coverage
+      EXECUTABLE ${TARGET_NAME}
+      BASE_DIRECTORY "${PROJECT_SOURCE_DIR}"
+      EXCLUDE ${EXCL}
+    )
+  endif()
+endforeach()
+
+<<<<<<< HEAD
 list(APPEND EXE_NAMES moirai_test moirai_test_api)
 list(APPEND LIB_NAMES moirai_test_lib moirai_test_lib_a moirai_test_lib_b)
 
@@ -111,6 +212,8 @@ foreach(TARGET_NAME IN LISTS EXE_NAMES)
   endif()
 endforeach()
 
+=======
+>>>>>>> testing
 foreach(TARGET_NAME IN LISTS LIB_NAMES)
   # set(src_files "${TARGET_NAME}_SOURCE_FILES")
   ADD_LIBRARY(${TARGET_NAME} SHARED ${${TARGET_NAME}_SOURCE_FILES} )
@@ -139,16 +242,26 @@ add_custom_target(uninstall
 ########### End uninstall target ###############
 
 
-
 if(WIN32)
   INSTALL(TARGETS ${this_target}
     RUNTIME DESTINATION bin
   )
 else()
   INSTALL(TARGETS ${this_target}
-    LIBRARY DESTINATION lib
+    # EXPORT libmoirai # apparently not in favor
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    # LIBRARY DESTINATION lib
+    # ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
   )
-endif()
+  # create_symlink(libmoirai${CMAKE_SHARED_LIBRARY_SUFFIX} TARGET moirai)
+  # install(FILES $<TARGET_LINKER_FILE_DIR:moirai>/libmoirai${CMAKE_SHARED_LIBRARY_SUFFIX}
+  #         DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
+  install(FILES ${CMAKE_BINARY_DIR}/${TARGET_LIB_NAME}.pc
+    # DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/pkgconfig) from examplar, but this appears not prevalent, most I see are under /usr/lib/x86_64-linux-gnu/pkgconfig, so:
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
+    # The above also prevents a lintian error
+  endif()
 
 # Packages - currently just an RPM
 set(CPACK_PACKAGE_VERSION ${VERSION})

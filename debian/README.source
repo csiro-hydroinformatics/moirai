@@ -1,0 +1,48 @@
+libmoirai for Debian
+----------------
+
+libmoirai can be downloaded from its webpage:
+https://github.com/csiro-hydroinformatics/moirai
+
+
+Obtaining the Debian source package
+-----------------------------------
+
+libmoirai is maintained using git-buildpackage. This file documents the steps
+needed to package a new upstream version.
+
+One-time setup steps: get your copy of the Debian source package from Git:
+  $ ssh-add
+  $ git clone git@github.com:csiro-hydroinformatics/moirai.git
+  $ cd moirai
+  $ # not sure about the following, mimicking from libzip
+  $ git checkout -b pristine-tar remotes/origin/pristine-tar
+  $ git checkout -b upstream remotes/origin/upstream
+  $ git checkout master
+
+Packaging a new version
+-----------------------
+
+From inside the libmoirai folder:
+1. Retrieve the new upstream tarball, update the new upstream source into the
+git repository, and remove the non-DFSG file:
+  $ mkdir -p ../tarfiles
+  $ cd ../tarfiles/
+  $ cp libmoirai_$$VERSION$$.orig.tar.gz libmoirai+$$VERSION$$+dfsg.1.orig.tar.gz
+  $ gunzip libmoirai+$$VERSION$$+dfsg.1.orig.tar.gz
+  $ tar --delete --file libmoirai_$$VERSION$$.orig.tar libmoirai-rel-$$VERSION$$/docs/appnote.txt
+  $ gzip libmoirai+$$VERSION$$+dfsg.1.orig.tar.gz
+
+2. Build the package:
+  $ git-buildpackage --git-pristine-tar import-orig ../tarfiles/libmoirai+$$VERSION$$+dfsg.1.orig.tar.gz
+
+3. Don't forget to commit your changes, tag the new Debian version and push
+everything back up to the Debian Git repository:
+  $ git commit -a
+  $ git-buildpackage --git-tag
+  $ git push --all
+  $ git push --tags
+
+Thanks for updating the package!
+
+ -- Jean-Michel Perraud <per202@csiro.au>  Fri, 09 Oct 2020 13:19:17 +1100
