@@ -1,4 +1,2 @@
 usr/include/moirai/*.h*
-
-# usr/lib/*/pkgconfig/*
-# usr/share/pkgconfig/*
+usr/lib/${DEB_HOST_MULTIARCH}/pkgconfig/*.pc    /usr/lib/${DEB_HOST_MULTIARCH}/pkgconfig/

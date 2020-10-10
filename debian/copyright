@@ -4,20 +4,11 @@ Upstream-Contact: Jean-Michel Perraud <per202@csiro.au>
 Source: <https://github.com/csiro-hydroinformatics/moirai>
 
 Copyright:
-
     Copyright (C) 2020 CSIRO
 
-Copyright for catch code:
-Files: include/catch/catch.hpp
-
-    Copyright (c) 2012 Two Blue Cubes Ltd. All rights reserved.
-    All rights reserved.
-
-
 License:
-
     CSIRO Open Source Software Licence Agreement (variation of the BSD / MIT License)
-    
+    .
     Copyright (c) 2018, Commonwealth Scientific and Industrial Research Organisation (CSIRO) ABN 41 687 119 230.
     All rights reserved. CSIRO is willing to grant you a licence to this library "moirai" on the following terms, except where otherwise indicated for third party material.
     Redistribution and use of this software in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -30,9 +21,3 @@ License:
     (a)               THE REPLACEMENT OF THE SOFTWARE, THE SUPPLY OF EQUIVALENT SOFTWARE, OR SUPPLYING RELEVANT SERVICES AGAIN;
     (b)               THE REPAIR OF THE SOFTWARE;
     (c)               THE PAYMENT OF THE COST OF REPLACING THE SOFTWARE, OF ACQUIRING EQUIVALENT SOFTWARE, HAVING THE RELEVANT SERVICES SUPPLIED AGAIN, OR HAVING THE SOFTWARE REPAIRED.
-
-License: include/catch/catch.hpp
-
-   Distributed under the Boost Software License, Version 1.0. (See accompanying
-   file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
-

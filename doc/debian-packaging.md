@@ -1,3 +1,18 @@
+# Building Debian packages
+
+I was expecting to get something working by similarity with existing packages. Not that easy
+
+[Intro to debian packaging](https://wiki.debian.org/Packaging/Intro?action=show&redirect=IntroDebianPackaging)
+[doc](https://www.debian.org/doc/manuals/maint-guide/)
+debian package `packaging-tutorial`
+
+Existing packages I found useful: [libzip](https://salsa.debian.org/debian/libzip), [openshot](https://salsa.debian.org/multimedia-team/libopenshot/-/tree/master/), [openmpi](https://salsa.debian.org/hpc-team/openmpi)
+
+kitware [dh-cmake](dh-cmake), not sure what this brings, am sure it does but place in this complicated landscape is uncertain. Have not managed to find its place in my context.
+
+during investigation the deb package lintian check complained that the lib was not using symbolic link nor versioning. Fair enough. Found a Very consise anser to versioning the versioned library building with cmake in [this SO post](https://stackoverflow.com/questions/17511496/how-to-create-a-shared-library-with-cmake).
+
+## Notes
 
 ```sh
 sudo apt install dh-make
@@ -6,26 +21,28 @@ sudo apt install dh-cmake
 sudo apt install equivs
 ```
 
-```
-cp -R moirai/ /tmp/
-cd /tmp/
-mv moirai/ moirai-1.0/
-mkdir moirai
-mv moirai-1.0 moirai/
-cd /tmp/moirai
-```
-
-```
-tar -zcvf moirai_1.0.orig.tar.gz moirai-1.0
+```sh
+FN=moirai-1.0
+DEST=~/tmp/moirai/${FN}
+mkdir -p ${DEST}
+cd ~/src/github_jm/moirai
+cp -R * ${DEST}/
+cd ${DEST}
+ls -a
 ```
 
-```
-cd /tmp/moirai/moirai-1.0
+### Creating template debian folder:
+
+_One off_ (not on a regular basis):
+
+```sh
+cd ${DEST}
+# if the debian subfolder does not exist
 dh_make
-# librarry, and yes
+# library, and yes
 ```
 
-```
+```text
 Skipping creating ../moirai_1.0.orig.tar.gz because it already exists
 Currently there is not top level Makefile. This may require additional tuning
 Done. Please edit the files in the debian/ subdirectory now.
@@ -35,61 +52,27 @@ Make sure you edit debian/control and change the Package: lines from
 moiraiBROKEN to something else, such as moirai1
 ```
 
-debian/rules:
+debian/rules:Very consise anser to versioning the versioned library building with cmake in [this SO post](https://stackoverflow.com/questions/17511496/how-to-create-a-shared-library-with-cmake)
+
 
 ```makefile
 %:
 	dh $@ --buildsystem=cmake
 ```
 
-ls debian/
-more 
-more *
-more debian/*
-ls
-rm -rf debian/
-ls
-dh_make
-history
+### Creating the source package
+
+```sh
+cd ${DEST}/..
+tar -zcvf moirai_1.0.orig.tar.gz moirai-1.0
+```
+
+### Creating the source package
+
+```sh
+cd ${DEST}
+debuild -us -uc 
+```
 
 
 
-2010  dh_cmake_install 
- 2011  dh_make
- 2012  ls
- 2013  cd ..
- 2014  ls
- 2015  cd ..
- 2016  ls
- 2017  mkdir debtut
- 2018  cd debtut/
- 2019  s
- 2020  ls
- 2021  dget http://snapshot.debian.org/archive/debian-archive/
- 2022  20090802T004153Z/debian/dists/bo/main/source/web/
- 2023  dget http://snapshot.debian.org/archive/debian-archive/20090802T004153Z/debian/dists/bo/main/source/web/wget_1.4.4-6.dsc
- 2024  ls
- 2025  debcheckout --help
- 2026  debcheckout wget_1.4.4-6.dsc
- 2027  ls
- 2028  dpkg-source -x wget_1.4.4-6.dsc
- 2029  ls
- 2030  ls wget-1.4.4/
- 2031  history
-
-dget http://snapshot.debian.org/archive/debian-archive/20090802T004153Z/debian/dists/bo/main/source/web/wget_1.4.4-6.dsc
-
-
-
-
-Using as a template: 
-https://salsa.debian.org/debian/libzip
-https://salsa.debian.org/multimedia-team/libopenshot/-/tree/master/
-
-Still bamboozled by this all. 
-Back to more basic
-
-https://wiki.debian.org/Packaging/Intro?action=show&redirect=IntroDebianPackaging
-
-
-https://www.debian.org/doc/manuals/maint-guide/

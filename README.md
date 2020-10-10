@@ -80,6 +80,12 @@ make
 $SUDO_CMD make install
 ```
 
+It is possible to uninstall using:
+
+```sh
+$SUDO_CMD make uninstall
+```
+
 # Related work
 
 I found out the [Loki](http://loki-lib.sourceforge.net/html/main.html) library. Nifty work, but a much larger and possibly different scope, more complicated. I have not thoroughly tasted (sic).

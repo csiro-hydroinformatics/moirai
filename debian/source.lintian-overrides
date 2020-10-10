@@ -1,0 +1,8 @@
+
+#moirai source: source-is-missing build/*
+
+#moirai source: source-is-missing obj-*/*
+
+moirai source: debian-rules-is-dh_make-template
+
+moirai source: source-contains-cmake-cache-file build/CMakeCache.txt

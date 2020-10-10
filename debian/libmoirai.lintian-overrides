@@ -1,0 +1,9 @@
+libmoirai: initial-upload-closes-no-bugs
+
+# I really don't get the following. Surely the symlink comes from the same package???
+libmoirai: link-to-shared-library-in-wrong-package usr/lib/x86_64-linux-gnu/libmoirai.so.1.0.1 usr/lib/x86_64-linux-gnu/libmoirai.so
+
+# objdump -p ./build/libmoirai.so.1.0.1 | sed -n -e's/^[[:space:]]*SONAME[[:space:]]*//p' | sed -r -e's/([0-9]).so./\1-/; s/.so(.|$)//; y/_/-/; s/(.*)/\L&/'
+libmoirai: package-name-doesnt-match-sonames libmoirai1
+
+libmoirai: possible-unindented-list-in-extended-description
