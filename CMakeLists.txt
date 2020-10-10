@@ -64,15 +64,9 @@ function(create_symlink DEST_FILE)
 
 endfunction()
 
-
-# Find catch.hpp
-find_path (catch_INCLUDE_DIRS NAMES catch/catch.hpp PATHS )
-# find_path (catch_INCLUDE_DIRS NAMES catch/catch.hpp PATHS ./include)
-
 ## section: include directory
 INCLUDE_DIRECTORIES(
 	./include
-   ${catch_INCLUDE_DIRS}
 )
 
 ## section: library directories
