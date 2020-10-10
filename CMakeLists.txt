@@ -135,10 +135,6 @@ ADD_DEFINITIONS(
 # JM needed to use this as of 2016-07, after an upgrade to latest Debian setup. The Add_definitions macro was not working, somehow.
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-<<<<<<< HEAD
-
-=======
->>>>>>> testing
 IF (ENABLE_CODECOVERAGE)
   INCLUDE(CodeCoverage)
   append_coverage_compiler_flags()
@@ -197,7 +193,6 @@ foreach(val RANGE ${len2})
   endif()
 endforeach()
 
-<<<<<<< HEAD
 list(APPEND EXE_NAMES moirai_test moirai_test_api)
 list(APPEND LIB_NAMES moirai_test_lib moirai_test_lib_a moirai_test_lib_b)
 
@@ -212,8 +207,6 @@ foreach(TARGET_NAME IN LISTS EXE_NAMES)
   endif()
 endforeach()
 
-=======
->>>>>>> testing
 foreach(TARGET_NAME IN LISTS LIB_NAMES)
   # set(src_files "${TARGET_NAME}_SOURCE_FILES")
   ADD_LIBRARY(${TARGET_NAME} SHARED ${${TARGET_NAME}_SOURCE_FILES} )
