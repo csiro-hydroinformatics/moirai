@@ -193,20 +193,6 @@ foreach(val RANGE ${len2})
   endif()
 endforeach()
 
-list(APPEND EXE_NAMES moirai_test moirai_test_api)
-list(APPEND LIB_NAMES moirai_test_lib moirai_test_lib_a moirai_test_lib_b)
-
-foreach(TARGET_NAME IN LISTS EXE_NAMES)
-  # set(src_files "${TARGET_NAME}_SOURCE_FILES")
-  ADD_executable(${TARGET_NAME} ${${TARGET_NAME}_SOURCE_FILES} )
-  IF (ENABLE_CODECOVERAGE)
-    setup_target_for_coverage_gcovr_html(
-      NAME ${TARGET_NAME}_coverage
-      EXECUTABLE ${TARGET_NAME}
-    )
-  endif()
-endforeach()
-
 foreach(TARGET_NAME IN LISTS LIB_NAMES)
   # set(src_files "${TARGET_NAME}_SOURCE_FILES")
   ADD_LIBRARY(${TARGET_NAME} SHARED ${${TARGET_NAME}_SOURCE_FILES} )
