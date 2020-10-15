@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.12)
 
-# NOTE: the libpng set of simlinks does not appear to be the prevalent standard, so sticking to libmoirai.so -> libmoirai.so.1 -> libmoirai.so.1.0.3 rather than adopt the libpng scheme
+# NOTE: the libpng set of symlinks does not appear to be the prevalent standard, so sticking to libmoirai.so -> libmoirai.so.1 -> libmoirai.so.1.0.3 rather than adopt the libpng scheme
 # SET LIBNAME
 # set(TARGET_LIB_NAME moirai${TARGET_MAJOR}${TARGET_MINOR}) libpng scheme, too peculiar
 set(TARGET_LIB_NAME moirai)
@@ -206,7 +206,7 @@ TARGET_LINK_LIBRARIES( moirai_test_lib_b ${this_target})
 TARGET_LINK_LIBRARIES( moirai_test_lib_a moirai_test_lib_b)
 TARGET_LINK_LIBRARIES( moirai_test_api moirai_test_lib_a moirai_test_lib)
 
-# Files to be installed - used by packaging stuff below
+# Files to be installed
 INSTALL(FILES ${${this_target}_HEADER_FILES} DESTINATION include/moirai)
 
 ########### Add uninstall target ###############
@@ -219,7 +219,6 @@ configure_file(
 add_custom_target(uninstall
     COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
 ########### End uninstall target ###############
-
 
 if(WIN32)
   INSTALL(TARGETS ${this_target}
