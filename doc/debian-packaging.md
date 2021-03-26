@@ -15,10 +15,9 @@ during investigation the deb package lintian check complained that the lib was n
 ## Notes
 
 ```sh
-sudo apt install dh-make
+sudo apt install dh-make equivs
 #https://gitlab.kitware.com/debian/dh-cmake
 sudo apt install dh-cmake
-sudo apt install equivs
 ```
 
 ```sh

@@ -90,5 +90,5 @@ $SUDO_CMD make uninstall
 
 I found out the [Loki](http://loki-lib.sourceforge.net/html/main.html) library. Nifty work, but a much larger and possibly different scope, more complicated. I have not thoroughly tasted (sic).
 
-Moirai is not an API bindings generator. [SWIG](http://swig.org) is. That said I assessed for most C API I have designed that I was [better off with my own](https://github.com/csiro-hydroinformatics/rcpp-wrapper-generation), though.
+Moirai is not an API bindings generator. [SWIG](http://swig.org) is. That said I assessed for most C API I have designed that I was [better off with my own](https://github.com/csiro-hydroinformatics/c-api-wrapper-generation), though.
 
