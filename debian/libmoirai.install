@@ -1,2 +1,3 @@
 # Shared libraries
-usr/lib/${DEB_HOST_MULTIARCH}/libmoirai.so*    /usr/lib/${DEB_HOST_MULTIARCH}
+# usr/lib/${DEB_HOST_MULTIARCH}/libmoirai.so*    /usr/lib/${DEB_HOST_MULTIARCH}
+usr/lib/*/libmoirai.so*

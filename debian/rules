@@ -2,7 +2,8 @@
 
 export DH_VERBOSE = 1
 
-DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+include /usr/share/dpkg/architecture.mk 
+# DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 
 %:
 	dh $@ --buildsystem=cmake
@@ -11,4 +12,5 @@ DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 # This is example for Cmake (See https://bugs.debian.org/641051 )
 override_dh_auto_configure:
 	dh_auto_configure -- \
+	-DLIB_SUFFIX="/$(DEB_HOST_MULTIARCH)" \
 	-DCMAKE_LIBRARY_PATH=$(DEB_HOST_MULTIARCH)
