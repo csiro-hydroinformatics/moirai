@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.10)
 
 # NOTE: the libpng set of symlinks does not appear to be the prevalent standard, so sticking to libmoirai.so -> libmoirai.so.1 -> libmoirai.so.1.0.3 rather than adopt the libpng scheme
 # SET LIBNAME

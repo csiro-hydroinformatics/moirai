@@ -5,20 +5,19 @@ I was expecting to get something working by similarity with existing packages. N
 [Intro to debian packaging](https://wiki.debian.org/Packaging/Intro?action=show&redirect=IntroDebianPackaging)
 [doc](https://www.debian.org/doc/manuals/maint-guide/)
 debian package `packaging-tutorial`
+Kitware [dh-cmake](https://gitlab.kitware.com/debian/dh-cmake)
 
 Existing packages I found useful: [libzip](https://salsa.debian.org/debian/libzip), [openshot](https://salsa.debian.org/multimedia-team/libopenshot/-/tree/master/), [openmpi](https://salsa.debian.org/hpc-team/openmpi)
 
-kitware [dh-cmake](dh-cmake), not sure what this brings, am sure it does but place in this complicated landscape is uncertain. Have not managed to find its place in my context.
 
 during investigation the deb package lintian check complained that the lib was not using symbolic link nor versioning. Fair enough. Found a Very consise anser to versioning the versioned library building with cmake in [this SO post](https://stackoverflow.com/questions/17511496/how-to-create-a-shared-library-with-cmake).
 
 ## Notes
 
 ```sh
-sudo apt install dh-make
+sudo apt install dh-make equivs
 #https://gitlab.kitware.com/debian/dh-cmake
 sudo apt install dh-cmake
-sudo apt install equivs
 ```
 
 ```sh
