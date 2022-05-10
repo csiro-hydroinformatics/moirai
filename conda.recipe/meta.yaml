@@ -1,0 +1,31 @@
+package:
+  name: moirai
+  version: 0.1.2
+  # version: "{{GIT_DESCRIBE_TAG }}"
+
+# Note that the build script overrides these using info from git.
+# build:
+#   string: "{{ GIT_BUILD_STR }}"
+#   features:
+#     - vc14               [win]
+
+source:
+  path: ../
+
+requirements:
+  build:
+    # - "{{compiler('<language>')}}"
+    - curl [win]
+    - cmake
+    - gcc [unix]
+  run:
+    - curl [win]
+    - libgcc [unix]
+
+# test:
+#   files:
+#     - UnitTestData.tar.gz
+
+about:
+  home: 'https://gitlab.bom.gov.au/moirai'
+  summary: 'Moirai libraries.'
