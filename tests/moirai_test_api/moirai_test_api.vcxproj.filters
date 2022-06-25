@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="../../include/moirai/shared_pointer.hpp">
+    <ClInclude Include="../../include/moirai/reference_handle.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
