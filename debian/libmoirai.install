@@ -1,3 +1,9 @@
 # Shared libraries
 # usr/lib/${DEB_HOST_MULTIARCH}/libmoirai.so*    /usr/lib/${DEB_HOST_MULTIARCH}
 usr/lib/*/libmoirai.so*
+# NOTE: maybe to address the lintian warning "link-to-shared-library-in-wrong-package", we should instead use:
+# usr/lib/*/libmoirai.so.*
+# but this is on top of lintian wanting the major version of the library to be in the name:
+# package-name-doesnt-match-sonames
+# objdump -p /usr/local/lib/libmoirai.so.1.0.1 | sed -n -e's/^[[:space:]]*SONAME[[:space:]]*//p' | sed -r -e's/([0-9]).so./\1-/; s/.so(.|$)//; y/_/-/; s/(.*)/\L&/'
+# libmoirai1.so

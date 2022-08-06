@@ -4,3 +4,5 @@ usr/include/moirai/*.h*
 # usr/lib/*/pkgconfig/*.pc # not working 
 # Ubuntu VM seems to require:
 usr/lib/x86_64-linux-gnu/pkgconfig/moirai.pc   /usr/lib/x86_64-linux-gnu/pkgconfig/
+# NOTE: maybe to address the lintian warning "link-to-shared-library-in-wrong-package", we should instead use:
+# usr/lib/*/libmoirai.so
