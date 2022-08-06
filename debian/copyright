@@ -4,8 +4,8 @@ Upstream-Contact: Jean-Michel Perraud <per202@csiro.au>
 Source: <https://github.com/csiro-hydroinformatics/moirai>
 
 Files: *
-Copyright:
-    Copyright (C) 2020 CSIRO
+Copyright: 2013-2022 Commonwealth Scientific and Industrial Research Organisation (CSIRO)
+
 
 License:
     CSIRO Open Source Software Licence Agreement (variation of the BSD / MIT License)

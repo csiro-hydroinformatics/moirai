@@ -6,8 +6,8 @@ Build-Depends: cmake,
 Standards-Version: 4.5.0
 Section: libs
 Homepage: https://github.com/csiro-hydroinformatics/moirai
-#Vcs-Browser: https://salsa.debian.org/debian/moirai
-#Vcs-Git: https://salsa.debian.org/debian/moirai.git
+Vcs-Browser: https://github.com/csiro-hydroinformatics/moirai
+#Vcs-Git: https://github.com/csiro-hydroinformatics/moirai.git
 Rules-Requires-Root: no
 
 Package: libmoirai-dev
