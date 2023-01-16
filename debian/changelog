@@ -1,3 +1,9 @@
+moirai (1.1-1) unstable; urgency=medium
+
+  * Changes to the error_log class: instance states instead of static.
+
+ -- Jean-Michel Perraud <jean-michel.perraud@csiro.au>  Mon, 16 Jan 2023 17:54:58 +1100
+
 moirai (1.0-1) unstable; urgency=medium
 
   * Initial release, testing debian packaging

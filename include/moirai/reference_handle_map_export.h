@@ -36,9 +36,9 @@ extern "C" {
 
 	MOIRAI_API int get_reference_count(REFERENCE_HANDLE_PTR ptr);
 
-	MOIRAI_API bool has_error_handling_callback_registered();
+	// MOIRAI_API bool has_error_handling_callback_registered();
 
-	MOIRAI_API void register_error_handling_callback(const void* callback);
+	// MOIRAI_API void register_error_handling_callback(const void* callback);
 
 #ifdef __cplusplus
 }
