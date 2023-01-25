@@ -36,7 +36,7 @@ This file is a template from which you can set up a property file that matches t
     <WholeProgramOptimization Condition="'$(Configuration)'=='Debug'">false</WholeProgramOptimization>
     <WholeProgramOptimization Condition="'$(Configuration)'=='Release'">true</WholeProgramOptimization>	
 	<!-- Potentially included here? -->
-    <!-- <PlatformToolset>v120</PlatformToolset> -->
+    <!-- <PlatformToolset>v142</PlatformToolset> -->
   </PropertyGroup>
 
   <ItemDefinitionGroup>
