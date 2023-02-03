@@ -1,3 +1,7 @@
+embuild/
+
+.coverage
+
 *.tlog
 *.idb
 *.exp
