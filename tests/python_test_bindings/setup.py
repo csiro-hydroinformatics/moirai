@@ -64,7 +64,7 @@ setup(
     long_description=long_description,
     url='https://github.com/jmp75/testmoirai',
     author='Jean-Michel Perraud, Juan Castilla',
-    author_email='per202@csiro.au',
+    author_email='jean-michel.perraud@csiro.au',
     classifiers=CLASSIFIERS,
     keywords='lithology analysis',
     packages=['testmoira'],

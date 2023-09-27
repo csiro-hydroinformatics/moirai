@@ -1,6 +1,6 @@
 Source: moirai
 Priority: optional
-Maintainer: Jean-Michel Perraud <per202@csiro.au>
+Maintainer: Jean-Michel Perraud <jean-michel.perraud@csiro.au>
 Build-Depends: cmake,
                debhelper-compat (= 11)
 Standards-Version: 4.5.0
