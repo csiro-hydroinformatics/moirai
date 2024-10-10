@@ -55,6 +55,9 @@ extern "C" {
 
 	SPECIES_API MAMAL_PTR create_mamal_ptr(CAT_PTR cat);
 
+	SPECIES_API void register_exception_callback_function(const void* callback);
+	SPECIES_API int has_callback_registered();
+
 #ifdef __cplusplus
 }
 #endif

@@ -151,3 +151,19 @@ TEST_CASE("Opaque pointers handlers meant for C++ projects accessing the C API")
 	delete mamal_h;
 }
 
+static std::string last_message;
+
+void native_exc_handler(const char* str)
+{
+	std::string msg(str);
+	last_message = msg;
+}
+
+TEST_CASE("Registering a callback function works as expected")
+{
+	// trying to diagnose https://github.com/csiro-hydroinformatics/moirai/issues/1
+	void* eh_func = (void*)(&native_exc_handler);
+	REQUIRE(has_callback_registered() == 0);
+	register_exception_callback_function(eh_func);
+	REQUIRE(has_callback_registered() == 1);
+}

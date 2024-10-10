@@ -1,6 +1,7 @@
 #include "c_interop_api.h"
 
 #include "moirai/reference_handle_map_export.h"
+#include "moirai/error_reporting.h"
 
 
 #ifdef _WIN32
@@ -9,6 +10,8 @@
 #include <string.h>
 #define STRDUP strdup
 #endif
+
+static moirai::error_handling::error_log error_handler;
 
 #define STLSTR_TO_ANSISTR(x) STRDUP(x.c_str())
 
@@ -65,4 +68,21 @@ int put_in_dog_kenel(DOG_PTR d)
 void release_handle_species_via_moirai(VOID_PTR_PROVIDER_PTR ptr)
 {
 	dispose_reference_handle(ptr);
+}
+
+void register_exception_callback_function(const void* callback)
+{
+	// diagnose https://github.com/csiro-hydroinformatics/moirai/issues/1
+	if (callback == nullptr) // Allow the deregistration, at least for unit test purposes.
+		error_handler.register_exception_callback(callback);
+	else if (!error_handler.has_callback_registered())
+		error_handler.register_exception_callback(callback);
+}
+
+int has_callback_registered()
+{
+	// diagnose https://github.com/csiro-hydroinformatics/moirai/issues/1
+	if (error_handler.has_callback_registered())
+		return 1;
+	return 0;
 }
