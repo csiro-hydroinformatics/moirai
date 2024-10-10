@@ -5,6 +5,7 @@
 
 #define USING_MOIRAI_API
 #include "../../include/moirai/reference_handle.hpp"
+#include "../../include/moirai/error_reporting.h"
 
 using std::vector;
 using namespace moirai;
@@ -95,4 +96,11 @@ TEST_CASE("Reference counting via the API", "[Moirai behavior]")
 	REQUIRE_FALSE(reference_handle_map::instance().has_handle(h));
 }
 
+TEST_CASE("Error handler class for x-language message interop", "[Moirai behavior]")
+{
+	// Trying to diagnose and reproduce issue
+	// https://github.com/csiro-hydroinformatics/moirai/issues/1
+	moirai::error_handling::error_log errorHandler;
+	REQUIRE(!errorHandler.has_callback_registered());
 
+}
