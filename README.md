@@ -1,6 +1,11 @@
 ﻿MOIRAI: Manage C++ Objects's lifetime when exposed through a C API
 =====================================================
 
+<a href="https://scan.coverity.com/projects/csiro-hydroinformatics-moirai">
+  <img alt="Coverity Scan Build Status"
+       src="https://scan.coverity.com/projects/27474/badge.svg"/>
+</a>
+
 Windows - master: [![Master build status](https://ci.appveyor.com/api/projects/status/8fobpshmwrmt3vmd/branch/master?svg=true)](https://ci.appveyor.com/project/jmp75/moirai/branch/master) testing: [![testing build status](https://ci.appveyor.com/api/projects/status/8fobpshmwrmt3vmd/branch/testing?svg=true)](https://ci.appveyor.com/project/jmp75/moirai/branch/testing)
 
 Linux - master: [![Linux master Build Status](https://travis-ci.org/csiro-hydroinformatics/moirai.svg?branch=master "Linux master Build Status")](https://travis-ci.org/csiro-hydroinformatics/moirai/builds) testing: [![Linux testing Build Status](https://travis-ci.org/csiro-hydroinformatics/moirai.svg?branch=testing "Linux testing Build Status")](https://travis-ci.org/csiro-hydroinformatics/moirai/builds)
