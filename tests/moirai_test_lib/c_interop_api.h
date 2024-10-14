@@ -57,6 +57,7 @@ extern "C" {
 
 	SPECIES_API void register_exception_callback_function(const void* callback);
 	SPECIES_API int has_callback_registered();
+	SPECIES_API void trigger_callback();
 
 #ifdef __cplusplus
 }

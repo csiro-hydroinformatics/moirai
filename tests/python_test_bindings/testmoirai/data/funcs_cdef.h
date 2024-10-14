@@ -8,3 +8,7 @@ extern void release_handle(void* ptr);
 extern void release_handle_species_via_moirai(void* ptr);
 extern int reference_count(void* ptr);
 extern void* create_mamal_ptr(void* cat);
+extern void register_exception_callback_function(const void* callback);
+extern int has_callback_registered();
+extern void trigger_callback();
+

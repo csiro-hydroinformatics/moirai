@@ -1,5 +1,8 @@
 embuild/
 
+__pycache__/
+.vscode/
+
 .coverage
 
 *.tlog

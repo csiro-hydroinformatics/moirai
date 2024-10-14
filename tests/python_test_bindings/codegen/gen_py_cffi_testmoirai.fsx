@@ -71,8 +71,8 @@ def dispose_shared_pointer_py(ptr:Any) -> None:
     # leading to a TypeError: 'NoneType' object is not callable.
     # This is a nuisance, and hard to fully diagnose.
     # So, we will use the following workaround to guard against it. See WIRADA-659.
-    if {1} is not None: #  and {1}.DisposeSharedPointer is not None:
-        {1}.DisposeSharedPointer(ptr_xptr.ptr)
+    if {1} is not None: #  and {1}.release_handle is not None:
+        {1}.release_handle(ptr_xptr.ptr)
 
 "
 

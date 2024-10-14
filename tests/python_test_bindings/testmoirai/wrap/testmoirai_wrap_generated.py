@@ -65,8 +65,8 @@ def dispose_shared_pointer_py(ptr:Any) -> None:
     # leading to a TypeError: 'NoneType' object is not callable.
     # This is a nuisance, and hard to fully diagnose.
     # So, we will use the following workaround to guard against it. See WIRADA-659.
-    if testmoirai_so is not None: #  and testmoirai_so.DisposeSharedPointer is not None:
-        testmoirai_so.DisposeSharedPointer(ptr_xptr.ptr)
+    if testmoirai_so is not None: #  and testmoirai_so.release_handle is not None:
+        testmoirai_so.release_handle(ptr_xptr.ptr)
 
 @_m_wrap.check_exceptions
 def _get_name_native(x):
@@ -248,5 +248,56 @@ def create_mamal_ptr_py(cat:'Cat') -> 'Mamal':
     cat_xptr = wrap_as_pointer_handle(cat)
     result = _create_mamal_ptr_native(cat_xptr.ptr)
     return custom_wrap_cffi_native_handle(result, 'MAMAL_PTR')
+
+
+@_m_wrap.check_exceptions
+def _register_exception_callback_function_native(callback):
+    testmoirai_so.register_exception_callback_function(callback)
+
+def register_exception_callback_function_py(callback:Any) -> None:
+    """register_exception_callback_function_py
+    
+    register_exception_callback_function_py: generated wrapper function for API function register_exception_callback_function
+    
+    Args:
+        callback (Any): callback
+    
+    """
+    _register_exception_callback_function_native(callback)
+
+
+@_m_wrap.check_exceptions
+def _has_callback_registered_native():
+    result = testmoirai_so.has_callback_registered()
+    return result
+
+def has_callback_registered_py() -> int:
+    """has_callback_registered_py
+    
+    has_callback_registered_py: generated wrapper function for API function has_callback_registered
+    
+    Args:
+    
+    Returns:
+        (int): returned result
+    
+    """
+    result = _has_callback_registered_native()
+    return result
+
+
+@_m_wrap.check_exceptions
+def _trigger_callback_native():
+    testmoirai_so.trigger_callback()
+
+def trigger_callback_py() -> None:
+    """trigger_callback_py
+    
+    trigger_callback_py: generated wrapper function for API function trigger_callback
+    
+    Args:
+    
+    """
+    _trigger_callback_native()
 
 

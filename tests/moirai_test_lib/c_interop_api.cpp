@@ -86,3 +86,9 @@ int has_callback_registered()
 		return 1;
 	return 0;
 }
+
+void trigger_callback()
+{
+	auto exception = std::logic_error("Error message sent from C++");
+	error_handler.handle_std_exception(exception);
+}
