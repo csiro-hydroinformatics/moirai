@@ -119,11 +119,3 @@ def check_exceptions(func):
 
 
 testmoirai_so.register_exception_callback_function(_exception_callback_testmoirai)
-
-
-@check_exceptions
-def testmoirai_dispose_multi_time_series_data(data):
-    """
-    :param ptr data: Pointer to a MultiTimeSeriesData.
-    """
-    testmoirai_so.DisposeMultiTimeSeriesData(data)
