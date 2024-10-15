@@ -13,6 +13,7 @@ from refcount.putils import (
     build_new_path_env,
     library_short_filename,
     update_path_windows,
+    augment_path_env
 )
 
 testmoirai_ffi = FFI()
@@ -40,9 +41,11 @@ if sys.platform == "linux":
     os.environ[to_env] = build_new_path_env(tmp_env_var, to_env, sys.platform)
     long_fname = str(build_dir / short_fname)
 elif sys.platform == "win32":
-    to_env = "PATH"
-    os.environ[to_env] = prepend_path_env([libs_path], to_env)
-    update_path_windows(from_env="LIBRARY_PATH", to_env="PATH")
+    build_dir = t_pkg_dir / ".." / ".." / "x64" / "Debug"
+    print(build_dir)
+    assert build_dir.exists()
+    new_paths = augment_path_env(str(build_dir),None, "PATH")
+    os.environ["PATH"] = new_paths
     long_fname = short_fname
 testmoirai_so = testmoirai_ffi.dlopen(long_fname, 1)  # Lazy loading
 
