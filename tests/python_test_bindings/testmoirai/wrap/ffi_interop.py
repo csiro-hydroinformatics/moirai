@@ -47,7 +47,9 @@ elif sys.platform == "win32":
     new_paths = augment_path_env(str(build_dir),None, "PATH")
     os.environ["PATH"] = new_paths
     long_fname = short_fname
-testmoirai_so = testmoirai_ffi.dlopen(long_fname, 1)  # Lazy loading
+
+flags = testmoirai_ffi.RTLD_LAZY # used to be 1 that led to https://github.com/python-cffi/cffi/issues/139
+testmoirai_so = testmoirai_ffi.dlopen(long_fname, flags)  # Lazy loading
 
 marshal = CffiMarshal(testmoirai_ffi)
 
