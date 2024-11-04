@@ -2,12 +2,12 @@ import os
 import sys
 
 import testmoirai.wrap.testmoirai_wrap_generated as twg
+from testmoirai.classes import Cat, Dog
 
 pkg_dir = os.path.join(os.path.dirname(__file__), "..")
 
 sys.path.append(pkg_dir)
 
-from testmoirai.classes import *
 
 # Note that these tests are very basic from a python interop perspective.
 # more elaborate ones are in the refcount package
