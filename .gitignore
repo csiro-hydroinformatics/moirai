@@ -28,3 +28,5 @@ src/obj/
 *.cache
 *.user
 build/
+
+nogit/
