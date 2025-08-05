@@ -1,3 +1,8 @@
+
+import sys
+import os
+print(os.environ["PATH"])
+
 """
 Wrapper around the testmoirai C API functions using CFFI.
 """
@@ -12,7 +17,8 @@ from cinterop.cffi.marshal import CffiMarshal
 from refcount.putils import augment_path_env, build_new_path_env, library_short_filename
 
 testmoirai_ffi = FFI()
-here = os.path.abspath(os.path.dirname(__file__))
+# here = os.path.abspath(os.path.dirname(__file__))
+here = r"C:\src\moirai\tests\python_test_bindings\testmoirai\wrap"
 testmoirai_pkg_dir = os.path.join(here, "..")
 cdefs_dir = os.path.join(testmoirai_pkg_dir, "data")
 assert os.path.exists(cdefs_dir)
@@ -39,9 +45,11 @@ elif sys.platform == "win32":
     build_dir = t_pkg_dir / ".." / ".." / "x64" / "Debug"
     print(build_dir)
     assert build_dir.exists()
-    new_paths = augment_path_env(str(build_dir), None, "PATH")
+    new_paths = augment_path_env(str(build_dir), None, "PATH", prepend=True)
     os.environ["PATH"] = new_paths
     long_fname = short_fname
+
+print(f"testmoirai_ffi.RTLD_NOW: {testmoirai_ffi.RTLD_NOW}")
 testmoirai_so = testmoirai_ffi.dlopen(long_fname, 1)  # Lazy loading
 
 marshal = CffiMarshal(testmoirai_ffi)
@@ -113,4 +121,4 @@ def check_exceptions(func):
     return wrapper
 
 
-testmoirai_so.register_exception_callback_function(_exception_callback_testmoirai)
+# testmoirai_so.register_exception_callback_function(_exception_callback_testmoirai)

@@ -56,4 +56,4 @@ def test_callback_error_handling():
 
 
 if __name__ == "__main__":
-    test_reference_count()
+    test_callback_error_handling()

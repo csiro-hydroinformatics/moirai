@@ -42,7 +42,9 @@ elif sys.platform == "win32":
     new_paths = augment_path_env(str(build_dir), None, "PATH")
     os.environ["PATH"] = new_paths
     long_fname = short_fname
+print("about to open with dlopen")
 testmoirai_so = testmoirai_ffi.dlopen(long_fname, 1)  # Lazy loading
+print("dlopen called")
 
 marshal = CffiMarshal(testmoirai_ffi)
 
@@ -113,4 +115,4 @@ def check_exceptions(func):
     return wrapper
 
 
-testmoirai_so.register_exception_callback_function(_exception_callback_testmoirai)
+# testmoirai_so.register_exception_callback_function(_exception_callback_testmoirai)

@@ -67,12 +67,10 @@ setup(
     author_email='jean-michel.perraud@csiro.au',
     classifiers=CLASSIFIERS,
     keywords='lithology analysis',
-    packages=['testmoira'],
+    packages=['testmoirai'],
     install_requires=REQUIREMENTS,
     extras_require={
-        ':python_version >= "3.6"': [
-            'PyQt5',
-        ]
+        ':python_version >= "3.6"': []
     # extras_require={  # Optional
     #     'dev': ['check-manifest'],
     #     'test': ['coverage'],
