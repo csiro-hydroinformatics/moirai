@@ -5,6 +5,7 @@
 #include <mutex>
 #include <memory>
 #include <functional>
+#include <stdexcept>
 
 #include "reference_type_converters.hpp"
 

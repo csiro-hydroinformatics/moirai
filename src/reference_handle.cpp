@@ -1,3 +1,5 @@
+#include <stdexcept>
+
 #include "moirai/reference_handle.h"
 
 
