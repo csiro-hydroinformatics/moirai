@@ -1,3 +1,4 @@
+#include <stdexcept>
 
 #include "moirai/reference_handle_map_export.h"
 
