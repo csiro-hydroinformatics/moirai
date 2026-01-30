@@ -3,20 +3,31 @@ name: CI
 on:
   push:
     branches:
-      # - main
+      - main
       - testing
   pull_request:
     branches:
-      # - main
+      - main
       - testing
 
 jobs:
   build-and-test:
-    runs-on: ubuntu-latest
-    
+    name: Build and Test on ${{ matrix.os }}
+    # I don't think we need to build/test on several versions, but if 
+    # we start to suspect we do, uncomment:
+    # strategy:
+    #   matrix:
+    #     os: [ubuntu-20.04, ubuntu-22.04, ubuntu-24.04]
+    # runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest    
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+    
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y cmake g++ gcc
     
     - name: Create build directory
       run: mkdir -p build
@@ -36,3 +47,29 @@ jobs:
     - name: Run moirai_test_api
       working-directory: build
       run: ./moirai_test_api
+  
+  build-debian-package:
+    name: Test Debian Package Build
+    runs-on: ubuntu-22.04
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Install build dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y debhelper cmake lintian
+    
+    - name: Build Debian package
+      run: |
+        dpkg-buildpackage -us -uc -b
+    
+    - name: Run lintian
+      run: |
+        lintian ../*.deb
+    
+    - name: List built packages
+      run: |
+        ls -lh ../*.deb
+

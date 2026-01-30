@@ -1,3 +1,11 @@
+moirai (1.2.0-1) unstable; urgency=medium
+
+  * Update to version 1.2.0
+  * Add GitHub Actions workflow for automated releases
+  * Support for Partial DEP-14 tag naming convention
+
+ -- Jean-Michel Perraud <jean-michel.perraud@csiro.au>  Thu, 30 Jan 2026 00:00:00 +1100
+
 moirai (1.1-1) unstable; urgency=medium
 
   * Changes to the error_log class: instance states instead of static.

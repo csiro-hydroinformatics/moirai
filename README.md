@@ -46,7 +46,45 @@ You may have a look at the unit tests under the 'tests' folder, in particular `m
 
 You can follow [a walkthrough](./doc/Walkthrough.md) derived from the unit tests.
 
-## Compiling
+## Installation
+
+### Pre-built Debian Packages (Recommended)
+
+Pre-built Debian packages are available from [GitHub Releases](https://github.com/csiro-hydroinformatics/moirai/releases) for Ubuntu 20.04, 22.04, and 24.04 (also compatible with Debian 10+).
+
+**Installation:**
+
+```bash
+# Download the appropriate .deb files for your distribution
+# For Ubuntu 22.04 as an example:
+wget https://github.com/csiro-hydroinformatics/moirai/releases/latest/download/libmoirai_1.2.0-1_amd64_ubuntu22.04.deb
+wget https://github.com/csiro-hydroinformatics/moirai/releases/latest/download/libmoirai-dev_1.2.0-1_amd64_ubuntu22.04.deb
+
+# Install packages
+sudo dpkg -i libmoirai_*.deb libmoirai-dev_*.deb
+sudo apt-get install -f  # Fix any dependency issues
+```
+
+**Verification:**
+
+```bash
+# Verify installation
+ldconfig -p | grep moirai
+pkg-config --modversion moirai
+```
+
+**Uninstallation:**
+
+```bash
+sudo apt-get remove libmoirai libmoirai-dev
+```
+
+### Supported Distributions
+
+- **Ubuntu:** 20.04 (Focal), 22.04 (Jammy), 24.04 (Noble) and later
+- **Debian:** 10 (Buster), 11 (Bullseye), 12 (Bookworm), 13 (Trixie) and later
+
+## Compiling from Source
 
 `moirai` is largely header-only for use in your projects, however there is a compiled shared library, and this is a deliberate design choice.
 

@@ -1,0 +1,153 @@
+name: Build and Release Debian Packages
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+      - 'debian/*'
+
+permissions:
+  contents: write
+
+jobs:
+  build-deb:
+    name: Build Debian Package on ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-20.04
+            dist: ubuntu20.04
+          - os: ubuntu-22.04
+            dist: ubuntu22.04
+          - os: ubuntu-24.04
+            dist: ubuntu24.04
+    runs-on: ${{ matrix.os }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y debhelper cmake lintian
+      
+      - name: Get version from tag
+        id: get_version
+        run: |
+          if [[ $GITHUB_REF == refs/tags/v* ]]; then
+            VERSION=${GITHUB_REF#refs/tags/v}
+          elif [[ $GITHUB_REF == refs/tags/debian/* ]]; then
+            VERSION=${GITHUB_REF#refs/tags/debian/}
+          else
+            VERSION="unknown"
+          fi
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Building version: $VERSION"
+      
+      - name: Build Debian package
+        run: |
+          dpkg-buildpackage -us -uc -b
+      
+      - name: Run lintian
+        run: |
+          lintian ../*.deb || true
+      
+      - name: List built packages
+        run: |
+          ls -lh ../*.deb
+      
+      - name: Rename packages with distribution suffix
+        run: |
+          cd ..
+          for deb in *.deb; do
+            base="${deb%.deb}"
+            mv "$deb" "${base}_${{ matrix.dist }}.deb"
+          done
+          ls -lh *.deb
+      
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: debian-packages-${{ matrix.dist }}
+          path: ../*.deb
+          retention-days: 5
+  
+  create-release:
+    name: Create GitHub Release
+    needs: build-deb
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+      
+      - name: Prepare release assets
+        run: |
+          mkdir -p release-assets
+          find artifacts -name '*.deb' -exec cp {} release-assets/ \;
+          ls -lh release-assets/
+          
+          # Create checksums
+          cd release-assets
+          sha256sum *.deb > SHA256SUMS
+          cat SHA256SUMS
+      
+      - name: Extract changelog for this version
+        id: changelog
+        run: |
+          # Extract the topmost entry from debian/changelog
+          CHANGELOG=$(awk '/^moirai/{flag=1} flag; /^ --/{if(flag) exit}' debian/changelog || echo "See debian/changelog for details")
+          echo "changelog<<EOF" >> $GITHUB_OUTPUT
+          echo "$CHANGELOG" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+      
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: release-assets/*
+          body: |
+            ## Moirai Debian Packages
+            
+            This release includes pre-built Debian packages for:
+            - Ubuntu 20.04 (Focal)
+            - Ubuntu 22.04 (Jammy)
+            - Ubuntu 24.04 (Noble)
+            
+            Also compatible with Debian 10 (Buster) and later.
+            
+            ### Installation
+            
+            Download the appropriate `.deb` file for your distribution:
+            
+            ```bash
+            # For Ubuntu 22.04 as an example
+            wget https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/libmoirai_*_ubuntu22.04.deb
+            wget https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/libmoirai-dev_*_ubuntu22.04.deb
+            
+            # Install packages
+            sudo dpkg -i libmoirai_*_ubuntu22.04.deb libmoirai-dev_*_ubuntu22.04.deb
+            sudo apt-get install -f  # Fix any dependency issues
+            ```
+            
+            ### Verification
+            
+            Verify the checksums:
+            ```bash
+            sha256sum -c SHA256SUMS
+            ```
+            
+            ### Changelog
+            
+            ```
+            ${{ steps.changelog.outputs.changelog }}
+            ```
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
