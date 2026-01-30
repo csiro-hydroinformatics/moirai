@@ -5,6 +5,7 @@
 Trying to release deb packages with github releases. To re-trigger the release workflow:
 
 ```sh
+git push # branch push, trigger ci not debian release.
 git tag -d debian/1.2.0-1 
 git push origin :refs/tags/debian/1.2.0-1 
 git tag debian/1.2.0-1 
