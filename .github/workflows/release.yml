@@ -53,24 +53,22 @@ jobs:
         run: |
           lintian ../*.deb || true
       
-      - name: List built packages
+      - name: Prepare packages for upload
         run: |
-          ls -lh ../*.deb
-      
-      - name: Rename packages with distribution suffix
-        run: |
-          cd ..
+          mkdir -p dist
+          cp ../*.deb dist/
+          cd dist
           for deb in *.deb; do
             base="${deb%.deb}"
             mv "$deb" "${base}_${{ matrix.dist }}.deb"
           done
-          ls -lh *.deb
+          ls -lh
       
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: debian-packages-${{ matrix.dist }}
-          path: ../*.deb
+          path: dist/*.deb
           retention-days: 5
   
   create-release:

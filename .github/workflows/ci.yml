@@ -12,8 +12,9 @@ on:
 
 jobs:
   build-and-test:
-    name: Build and Test on ${{ matrix.os }}
+    name: Build and Test on latest ubuntu
     # I don't think we need to build/test on several versions, but if 
+    # name: Build and Test on ${{ matrix.os }}
     # we start to suspect we do, uncomment:
     # strategy:
     #   matrix:

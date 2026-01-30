@@ -1,5 +1,18 @@
 # Building Debian packages
 
+## Jan 2026
+
+Trying to release deb packages with github releases. To re-trigger the release workflow:
+
+```sh
+git tag -d debian/1.2.0-1 
+git push origin :refs/tags/debian/1.2.0-1 
+git tag debian/1.2.0-1 
+git push origin debian/1.2.0-1 
+```
+
+## Past notes
+
 I was expecting to get something working by similarity with existing packages. Not that easy
 
 [Intro to debian packaging](https://wiki.debian.org/Packaging/Intro?action=show&redirect=IntroDebianPackaging)
