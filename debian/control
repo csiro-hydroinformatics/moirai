@@ -1,9 +1,9 @@
 Source: moirai
 Priority: optional
 Maintainer: Jean-Michel Perraud <jean-michel.perraud@csiro.au>
-Build-Depends: cmake,
-               debhelper-compat (= 11)
-Standards-Version: 4.5.0
+Build-Depends: cmake (>= 3.22),
+               debhelper-compat (= 13)
+Standards-Version: 4.6.2
 Section: libs
 Homepage: https://github.com/csiro-hydroinformatics/moirai
 Vcs-Browser: https://github.com/csiro-hydroinformatics/moirai
